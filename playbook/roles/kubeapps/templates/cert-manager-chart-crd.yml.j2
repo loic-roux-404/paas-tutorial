@@ -15,20 +15,7 @@ spec:
   repo: https://charts.jetstack.io
   valuesContent: |-
     installCRDs: true
-
-{% if cert_manager_is_local -%}
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: pebble
-  namespace: kube-system
-spec:
-  chart: pebble
-  targetNamespace: {{ cert_manager_namespace }}
-  repo: https://jupyterhub.github.io/helm-chart
-
 ---
-{% endif -%}
 
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -46,14 +33,3 @@ spec:
       http01:
         ingress:
           class: {{ kubeapps_k8s_ingress_class }}
-
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: cert-manager-csi-driver
-  namespace: kube-system
-spec:
-  chart: cert-manager-csi-driver
-  targetNamespace: {{ cert_manager_namespace }}
-  repo: https://charts.jetstack.io

@@ -22,12 +22,50 @@
 
 - set_fact:
     kubeapps_ingress_controller_ip: "{{ ingress_infos.resources[0].spec.clusterIP }}"
-    core_dns_crd: core-dns-config.yml
 
-- name: "Deploy core dns config to k3s"
+- name: "Deploy local env manifests to k3s"
   ansible.builtin.template:
-    src: "{{ core_dns_crd }}.j2"
-    dest: "/var/lib/rancher/k3s/server/manifests/{{ core_dns_crd }}"
+    src: "{{ item }}.j2"
+    dest: "/var/lib/rancher/k3s/server/manifests/{{ item }}"
     owner: "{{ kubeapps_user }}"
     group: "{{ kubeapps_user }}"
     mode: '0644'
+  loop:
+    - local-dns-ingress.yml
+    - pebble-chart-crd.yml
+
+- name: Wait for pebble service to start
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: pebble
+    kubeconfig: /etc/rancher/k3s/k3s.yaml
+    wait: yes
+    namespace: "{{ cert_manager_namespace }}"
+
+- name: Fetch root CA key
+  ansible.builtin.uri:
+    url: "https://localhost:32444/root-keys/0"
+    method: GET
+    validate_certs: false
+    return_content: yes
+  register: pebble_key
+
+- name: Fetch root CA cert
+  ansible.builtin.uri:
+    url: "https://localhost:32444/roots/0"
+    method: GET
+    validate_certs: false
+    return_content: yes
+  register: pebble_ca
+
+- debug: msg="{{ pebble_ca.content }}"
+
+- name: Create CA files
+  no_log: True
+  copy:
+    dest: "/var/lib/rancher/k3s/server/tls/{{ item.filename }}"
+    content: "{{ item.content }}"
+  loop:
+      - { content: "{{ pebble_key.content }}", filename: pebble-ca.key }
+      - { content: "{{ pebble_ca.content }}", filename: pebble-ca.crt }
