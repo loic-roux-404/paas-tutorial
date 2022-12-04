@@ -1,0 +1,34 @@
+---
+- name: Get Ingress service infos
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Service
+    name: traefik
+    kubeconfig: /etc/rancher/k3s/k3s.yaml
+    wait: yes
+    namespace: kube-system
+  register: ingress_infos
+
+- name: check ingress service infos available
+  assert:
+    that:
+      - ingress_infos.resources | length > 0
+
+- name: Recover ca content to trust
+  slurp:
+    src: "{{ kubeapps_internal_acme_ca_file }}"
+  register: ca_file_content
+
+- set_fact:
+    kubeapps_internal_acme_ca_content: "{{ ca_file_content.content }}"
+    kubeapps_ingress_controller_ip: "{{ ingress_infos.resources[0].spec.clusterIP }}"
+    cert_manager_acme_url: 
+      "https://{{ kubeapps_internal_acme_host }}:{{ kubeapps_internal_acme_port }}"
+    kubeapps_internal_acme_ca_extra_volumes:
+      - name: acme-internal-ca-share
+        configMap: 
+          name: acme-internal-ca-share
+    kubeapps_internal_acme_ca_extra_volumes_mounts:
+      - name: acme-internal-ca-share
+        mountPath: /etc/ssl/certs/internal-acme-ca.crt
+        subPath: ca.crt

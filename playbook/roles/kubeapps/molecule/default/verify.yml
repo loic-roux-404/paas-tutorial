@@ -25,8 +25,8 @@
         namespace: "kubeapps"
       register: kubeapps_infos
 
-    - name: Print list of running nodes.
-      debug: var=kubeapps_infos.resources
+    # - name: Print list of running nodes.
+    #   debug: var=kubeapps_infos.resources
 
     - name: Assertions on service kubeapps 
       assert:

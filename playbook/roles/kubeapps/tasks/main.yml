@@ -3,8 +3,8 @@
 - import_tasks: checks.yml
   tags: [kubeapps]
 
-- import_tasks: local-k3s-env.yml
-  when: cert_manager_is_local
+- import_tasks: internal-acme.yml
+  when: cert_manager_is_internal
   tags: [kubeapps]
 
 - import_tasks: manifests.yml

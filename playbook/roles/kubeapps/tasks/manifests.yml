@@ -8,6 +8,7 @@
     group: "{{ kubeapps_user }}"
     mode: '0644'
   loop:
+    - core-dns-config-crd.yml
     - cert-manager-chart-crd.yml
     - dex-chart-crd.yml
     - kubeapps-chart-crd.yml
