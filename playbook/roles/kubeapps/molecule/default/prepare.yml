@@ -10,13 +10,10 @@
       community.docker.docker_container:
         name: pebble
         image: "letsencrypt/pebble:latest"
-        command: pebble -config /pebble/pebble-config.json -strict -dnsserver 0.0.0.0:6053
+        command: pebble -config /pebble/pebble-config.json
         state: started
         restart: True
         network_mode: host
-        published_ports:
-          - "14000:14000"
-          - "15000:15000"
         volumes:
           - "{{ playbook_dir }}/pebble:/pebble:ro"
       register: result

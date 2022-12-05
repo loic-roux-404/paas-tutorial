@@ -823,6 +823,30 @@ kubeapps_authProxy_final: "{{ kubeapps_authProxy_default + kubeapps_authProxy }}
 
 Par défaut si on relance notre test molecule nous n'aurons pas d'activation de l'authentificaiton avec github. Nous allons donc pour cette fois faire un test manuelle de celle-ci car elle dépend de configuration propre à une production soit tls activé que kubeapps soit disponible en ligne. (obligation en terme de sécurité de oauth2 / github)
 
+
+note manifest extrait
+```yaml
+  "conditions": [
+      {
+          "lastTransitionTime": "2022-12-05T15:11:56Z",
+          "lastUpdateTime": "2022-12-05T15:11:56Z",
+          "message": "Deployment has minimum availability.",
+          "reason": "MinimumReplicasAvailable",
+          "status": "True",
+          "type": "Available"
+      },
+      {
+          "lastTransitionTime": "2022-12-05T15:11:46Z",
+          "lastUpdateTime": "2022-12-05T15:11:56Z",
+          "message": "ReplicaSet \"dex-5bd6ffdfd\" has successfully progressed.",
+          "reason": "NewReplicaSetAvailable",
+          "status": "True",
+          "type": "Progressing"
+      }
+  ],
+
+```
+
 ### I. Configuration de notre organisation github et application oauth
 
 Créer une nouvelle organisation [ici](https://github.com/account/organizations/new) :

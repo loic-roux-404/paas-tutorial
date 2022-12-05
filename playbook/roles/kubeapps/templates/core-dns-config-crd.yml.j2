@@ -24,8 +24,8 @@ data:
         reload
         loadbalance
     }
-    {% if cert_manager_is_internal -%}
-    {% for host in [kubeapps_dex_hostname, kubeapps_hostname] -%}
+
+    {% for host in [dex_hostname, kubeapps_hostname] -%}
     {{ host }} {
       hosts {
         {{ kubeapps_ingress_controller_ip }} {{ host }}
@@ -33,7 +33,6 @@ data:
       }
       whoami
     }
-
     {% endfor -%}
 
     {{ kubeapps_internal_acme_host }} {
@@ -44,4 +43,3 @@ data:
       whoami
     }
 
-    {% endif %}

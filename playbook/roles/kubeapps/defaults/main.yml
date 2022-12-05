@@ -1,13 +1,8 @@
 ---
-# Kubeapps
-kubeapps_internal_acme_external_name_tls_files: {}
-
+# Kubeapps internal acme server
 kubeapps_internal_acme_external_ip: ~
 kubeapps_internal_acme_host: acme-internal.k3s.local
-kubeapps_internal_acme_port: 14000
 kubeapps_internal_acme_ca_file: ~
-kubeapps_internal_acme_ca_extra_volumes: []
-kubeapps_internal_acme_ca_extra_volumes_mounts: []
 
 # HelmChart Custom Resource Definition for cert manager
 # see https://cert-manager.io/docs/configuration/acme/
@@ -15,17 +10,17 @@ cert_manager_namespace: cert-manager
 cert_manager_acme_url: "{{ letsencrypt_prod }}"
 cert_manager_email: ""
 cert_manager_private_key_secret: test_secret
-cert_manager_is_internal: "{{ kubeapps_internal_acme_ca_file | default(false) }}"
+cert_manager_is_internal: "{{ kubeapps_internal_acme_ca_file != None }}"
 
 # HelmChart Custom Resource Definition for dex oidc connector
-kubeapps_dex_namespace: dex
-kubeapps_dex_hostname: dex.k3s.local
-kubeapps_dex_client_id: kubeapps
-kubeapps_dex_client_secret: ZXhhbXBsZS1hcHAtc2VjcmV0
-kubeapps_dex_github_client_id: ~
-kubeapps_dex_github_client_secret: ~
-kubeapps_dex_github_client_org: ~
-kubeapps_dex_github_client_team: ~
+dex_namespace: dex
+dex_hostname: dex.k3s.local
+dex_client_id: kubeapps
+dex_client_secret: ZXhhbXBsZS1hcHAtc2VjcmV0
+dex_github_client_id: ~
+dex_github_client_secret: ~
+dex_github_client_org: ~
+dex_github_client_team: ~
 
 # HelmChart Custom Resource Definition for kubeapps variables
 kubeapps_namespace: kubeapps

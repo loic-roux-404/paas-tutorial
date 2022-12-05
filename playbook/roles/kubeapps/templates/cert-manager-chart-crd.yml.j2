@@ -15,41 +15,6 @@ spec:
   valuesContent: |-
     installCRDs: true
 
-{% if cert_manager_is_internal %}
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: cert-manager-trust
-  namespace: kube-system
-spec:
-  version: 0.2.0
-  chart: cert-manager-trust
-  targetNamespace: {{ cert_manager_namespace }}
-  repo: https://charts.jetstack.io
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: acme-internal-root-ca
-  namespace: "{{ cert_manager_namespace }}"
-data:
-  ca.crt: "{{ kubeapps_internal_acme_ca_content }}"
----
-apiVersion: trust.cert-manager.io/v1alpha1
-kind: Bundle
-metadata:
-  name: acme-internal-ca-share
-spec:
-  sources:
-  - configMap:
-      name: "acme-internal-root-ca"
-      key: "ca.crt"
-  target:
-    configMap:
-      key: "ca.crt"
-{% endif %}
-
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

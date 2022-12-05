@@ -3,3 +3,14 @@
 kubeapps_k8s_ingress_class: traefik
 letsencrypt_staging: https://acme-staging-v02.api.letsencrypt.org/directory
 letsencrypt_prod: https://acme-v02.api.letsencrypt.org/directory 
+
+# Mounted in acme internal
+kubeapps_internal_acme_ca_in_volume_crt: /etc/ssl/certs/acmeca.crt
+kubeapps_internal_acme_ca_extra_volumes:
+  - name: acme-internal-ca-share
+    configMap: 
+      name: acme-internal-ca-share
+kubeapps_internal_acme_ca_extra_volumes_mounts:
+  - name: acme-internal-ca-share
+    mountPath: "{{ kubeapps_internal_acme_ca_in_volume_crt }}"
+    subPath: ca.crt
