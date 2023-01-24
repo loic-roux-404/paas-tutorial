@@ -37,6 +37,6 @@ jobs:
 
     - name: Deploy mkdocs keeping helm chart index.yaml
       run: |
-        cp README.md docs/
+        cp -f README.md docs/README.md
         curl https://raw.githubusercontent.com/esgi-lyon/paas-tutorial/gh-pages/index.yaml > docs/index.yaml
         mkdocs gh-deploy --force
