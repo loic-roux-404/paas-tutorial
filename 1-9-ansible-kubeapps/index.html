@@ -1,0 +1,846 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1-8-ansible-dex/">
+      
+      
+        <link rel="next" href="../2-packer-playbook/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>1.9 Installation de kubeapps - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#19-installation-de-kubeapps" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.9 Installation de kubeapps
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-5-ansible-dns/" class="md-nav__link">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-7-ansible-trust-ca/" class="md-nav__link">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          1.9 Installation de kubeapps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        1.9 Installation de kubeapps
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ensuite-connexion-a-dex-idp-pour-sauthentifier-avec-github" class="md-nav__link">
+    Ensuite connexion à dex Idp pour s'authentifier avec github
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mise-en-place-des-tests-de-kubeapps" class="md-nav__link">
+    Mise en place des tests de kubeapps
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-packer-playbook/" class="md-nav__link">
+        2. Utilisation de notre rôle dans packer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-terraform-azure-network-vm/" class="md-nav__link">
+        3.3 Machine virtuelle et réseau
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-helm-chart/" class="md-nav__link">
+        4.1 Création du Helm chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ensuite-connexion-a-dex-idp-pour-sauthentifier-avec-github" class="md-nav__link">
+    Ensuite connexion à dex Idp pour s'authentifier avec github
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mise-en-place-des-tests-de-kubeapps" class="md-nav__link">
+    Mise en place des tests de kubeapps
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/1-9-ansible-kubeapps.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="19-installation-de-kubeapps">1.9 Installation de kubeapps<a class="headerlink" href="#19-installation-de-kubeapps" title="Permanent link">&para;</a></h1>
+<hr />
+<p>Commençons par construire notre manifest. Pour cela nous avons besoin de définir plusieurs variables pour rendre configurable l'utilisation de notre rôle :</p>
+<p>Dans <a href="playbook/roles/kubeapps/defaults/main.yml">playbook/roles/kubeapps/defaults/main.yml</a> on aura donc :</p>
+<ul>
+<li>
+<p><code>kubeapps_namespace</code> pour définir le namespace à créer et sur lequel on déploie kubeapps</p>
+</li>
+<li>
+<p><code>kubeapps_hostname</code> pour choisir à quel url sera disponible kubeapps.</p>
+</li>
+</ul>
+<blockquote>
+<p>Par défaut kubeapps sera disponible sur <code>kubeapps.k3s.local</code></p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/defaults/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="nn">---</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="c1"># HelmChart Custom Resource Definition for kubeapps variables</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="nt">kubeapps_namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="nt">kubeapps_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps.k3s.local</span>
+</code></pre></div></td></tr></table></div>
+<p>Ensuite nous allons utiliser toutes ces variables dans un manifest kubernetes qui inclus deux resources. Un namespace et une définition de dépendance helm avec sa configuration.</p>
+<blockquote>
+<p><strong>Note</strong> sur le templating jinja dans la moustache <code>{{}}</code> rajouter un <code>-</code> signifie qu'on ignore le format du côté où l'on utilise. Par exemple un retour à la ligne (colonne 0) sera ignorer pour <code>-}}</code>.</p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/kubeapps-chart-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Namespace</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_namespace</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nn">---</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_namespace</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.bitnami.com/bitnami</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">  </span><span class="nt">valuesContent</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="no">ingress:</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">      </span><span class="no">tls: true</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">      </span><span class="no">enabled: true</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">      </span><span class="no">hostname: &quot;{{ kubeapps_hostname }}&quot;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">      </span><span class="no">annotations:</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">        </span><span class="no">cert-manager.io/cluster-issuer: letsencrypt-acme-issuer</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">        </span><span class="no">kubernetes.io/ingress.class: &quot;{{ kubeapps_k8s_ingress_class }}&quot;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">        </span><span class="no">traefik.frontend.passHostHeader: &quot;true&quot;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">        </span><span class="no">traefik.ingress.kubernetes.io/router.tls: &quot;true&quot;</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><strong>Note</strong> On configure le ingress directement dans la définition helm tout en précisant bien que l'on utilise traefik en sachant que par défaut il est souvent utilisé <code>nginx</code> comme controller ingress</p>
+</blockquote>
+<p>Nous allons lancer la commande de templating grâce au module <code>template</code> de la collection <strong>builtin</strong> (fonctionnalités incluses par défaut) de ansible.</p>
+<p>Celle ci va faire le remplacement des variables utilisées dans les moustaches <code>{{}}</code> et placer le fichier au bon endroit dans notre machine invité. Ici, il se trouvera dans notre container <code>node-0</code> dans le répertoire <code>/var/lib/rancher/k3s/server/manifests/kubeapps-chart-crd.yml</code></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps-chart-crd.yml</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">      </span><span class="nt">deploy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_namespace</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Pour vérifier que les pods de kubeapps sont bien prêt :</p>
+<ul>
+<li>On regarde d'abord si la tâche <code>helm</code> a bien pu se finir</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-n<span class="w"> </span>kube-sysem<span class="w"> </span>--watch
+</code></pre></div>
+Devrait donné au bout de quelque minutes : <code>helm-install-kubeapps-4cdf8</code> avec status <code>COMPLETED</code></p>
+<h5 id="ensuite-connexion-a-dex-idp-pour-sauthentifier-avec-github">Ensuite connexion à dex Idp pour s'authentifier avec github<a class="headerlink" href="#ensuite-connexion-a-dex-idp-pour-sauthentifier-avec-github" title="Permanent link">&para;</a></h5>
+<p>Pour ajouter la couche d'authentification kubeapps fait appel à la solution <a href="https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider#github-auth-provider">oauth2-proxy</a>. Il s'agit donc d'un reverse proxy qui redirige le trafic http d'un client à un serveur implémentant oauth2 avant de permettre la connexion à kubeapps.</p>
+<p>Cette authentification est associée à un cookie converti en base64 à partir d'un secret que l'ont définie avec une commande simple : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;not-good-secret&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64
+</code></pre></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/defaults/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="c1"># ...</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="c1"># Cookie secret</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="nt">kubeapps_oauth_proxy_cookie_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bm90LWdvb2Qtc2VjcmV0Cg==</span>
+</code></pre></div></td></tr></table></div>
+<p><code>--oidc-issuer-url</code> est obligatoire quand l'on n'utilise pas un fournisseur d'authentification pré-conçu comme github, gitlab, google, etc. Il faut donc le définir avec l'url de <code>dex</code> pour qu'il soit bien consommé par le client openid de oauth2-proxy.</p>
+<blockquote>
+<p>Note : Pour consulter la configuration d'open id vous pouvez ouvrir l'url <a href="https://dex.k3s.local/.well-known/openid-configuration">dex.k3s.local/.well-known/openid-configuration</a> dans votre navigateur.</p>
+</blockquote>
+<p>Ensuite on réutilise nos secrets de <strong>dex idp</strong> pour créer et configurer l'accès du container <code>authProxy</code> à open id dans le pod <code>frontend</code> de kubeapps.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/kubeapps-chart-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span>
+<span class="normal"><a href="#__codelineno-6-39">39</a></span>
+<span class="normal"><a href="#__codelineno-6-40">40</a></span>
+<span class="normal"><a href="#__codelineno-6-41">41</a></span>
+<span class="normal"><a href="#__codelineno-6-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">    </span><span class="nt">authProxy</span><span class="p">:</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">      </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">      </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">dex_client_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">      </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">dex_client_secret</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">      </span><span class="nt">cookieSecret</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;{{</span><span class="nv"> </span><span class="s">kubeapps_oauth_proxy_cookie_secret</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="w">      </span><span class="nt">cookieRefresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">      </span><span class="nt">extraFlags</span><span class="p">:</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--oidc-issuer-url=https://{{ dex_hostname }}</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="w">      </span><span class="nt">extraVolumeMounts</span><span class="p">:</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a><span class="w">        </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_internal_acme_ca_extra_volumes_mounts | to_nice_yaml | indent(8)</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39"></a>
+<a id="__codelineno-6-40" name="__codelineno-6-40"></a><span class="w">    </span><span class="nt">frontend</span><span class="p">:</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41"></a><span class="w">      </span><span class="nt">extraVolumes</span><span class="p">:</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42"></a><span class="w">        </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_internal_acme_ca_extra_volumes | to_nice_yaml | indent(8)</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</code></pre></div></td></tr></table></div>
+<p>Enfin maintenant que notre chart est déployé avec un combo <strong>oauth-proxy</strong> / <strong>dex</strong> fonctionnel nous allons configurer le contrôle d'accès à l'administration du cluster. Nous utilisons pour cela une ressource <code>ClusterRoleBinding</code> pour lier un groupe d'une organisation github à un rôle <code>cluster-admin</code> qui lui donne tous les droits sur le cluster.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/kubeapps-chart-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nn">---</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRoleBinding</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps-github-teams</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nt">roleRef</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterRole</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-admin</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="nt">subjects</span><span class="p">:</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Group</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">dex_github_client_org</span><span class="nv"> </span><span class="s">}}:{{</span><span class="nv"> </span><span class="s">dex_github_client_team</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Nous voilà prêt à tester notre déploiement de kubeapps. Nous allons donc lancer notre test molecule et attendre son exécution :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>molecule<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--destroy<span class="w"> </span>never
+</code></pre></div>
+<p>Une fois l'exécution terminée, il faut attendre quelques secondes pour que tous les pods soient bien prêts. On peut alors se connecter à l'interface web de kubeapps en se connectant à l'adresse <a href="https://kubeapps.k3s.local">https://kubeapps.k3s.local</a> et en utilisant notre compte github nous allons pouvoir nous connecter.</p>
+<p>Voici la page de login attendue :</p>
+<p><img alt="kubeapps" src="../images/kubeapps-auth.png" /></p>
+<p>Et voici la page de dashboard de kubeapps une fois connecté :</p>
+<p><img alt="kubeapps" src="../images/kubeapps-ready.png" /></p>
+<h3 id="mise-en-place-des-tests-de-kubeapps">Mise en place des tests de kubeapps<a class="headerlink" href="#mise-en-place-des-tests-de-kubeapps" title="Permanent link">&para;</a></h3>
+<p>Grâce au module ansible <a href="https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_info_module.html">k8s info</a> on teste les pods centraux de kubeapps. Si ces pod sont bien en état <code>ready</code>, c'est que kubeapps est prêt</p>
+<blockquote>
+<p>On note qu'il est important de préciser à <code>k8s_info</code> la localisation kubeconfig qui se trouve à un endroit un peu exotique avec k3s. Cette config comporte des informations utilisateur et des certificats permettant de se connecter sur le cluster.</p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/molecule/default/verify.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span>
+<span class="normal"><a href="#__codelineno-9-37">37</a></span>
+<span class="normal"><a href="#__codelineno-9-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get Kubeapps service infos</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">      </span><span class="nt">kubernetes.core.k8s_info</span><span class="p">:</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">        </span><span class="nt">api_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">        </span><span class="nt">label_selectors</span><span class="p">:</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app.kubernetes.io/component = frontend</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="w">        </span><span class="nt">kubeconfig</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/rancher/k3s/k3s.yaml</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="w">        </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps_infos</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ansible.builtin.set_fact</span><span class="p">:</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">        </span><span class="nt">containers_statuses</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">(kubeapps_infos.resources</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">last).status.containerStatuses</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ansible.builtin.debug</span><span class="p">:</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a><span class="w">        </span><span class="nt">msg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">containers_statuses</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">map(attribute=&#39;name&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Assertions on service kubeapps</span><span class="w"> </span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a><span class="w">      </span><span class="nt">assert</span><span class="p">:</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a><span class="w">        </span><span class="nt">that</span><span class="p">:</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps_infos.resources | length &gt; 0</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">containers_statuses | selectattr(&#39;ready&#39;, &#39;equalto&#39;, true) | list | count == 2</span>
+</code></pre></div></td></tr></table></div>
+<p>Si votre playbook est déjà passé en entier un <code>molecule verify</code> va suffire pour jouer le playbook <code>verify.yml</code>.</p>
+<p>Vous devriez voir passer les assertions et les autres tâches.</p>
+<p>Pour autant vous ne verrez pas encore de retour de ce type tout simplement par ce que le code n'est pas complet.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>node-0                     : ok=15 ...
+</code></pre></div>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

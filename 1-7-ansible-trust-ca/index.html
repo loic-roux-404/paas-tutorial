@@ -1,0 +1,834 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1-6-ansible-cert-manager/">
+      
+      
+        <link rel="next" href="../1-8-ansible-dex/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>1.7 Faire confiance à notre autorité de certification - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#17-faire-confiance-a-notre-autorite-de-certification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.7 Faire confiance à notre autorité de certification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-5-ansible-dns/" class="md-nav__link">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          1.7 Faire confiance à notre autorité de certification
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sur-notre-machine-dans-les-differents-pods-ou-mtls" class="md-nav__link">
+    Sur notre machine dans les différents pods ou mTLS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sur-notre-navigateur" class="md-nav__link">
+    Sur notre navigateur :
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-9-ansible-kubeapps/" class="md-nav__link">
+        1.9 Installation de kubeapps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-packer-playbook/" class="md-nav__link">
+        2. Utilisation de notre rôle dans packer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-terraform-azure-network-vm/" class="md-nav__link">
+        3.3 Machine virtuelle et réseau
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-helm-chart/" class="md-nav__link">
+        4.1 Création du Helm chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sur-notre-machine-dans-les-differents-pods-ou-mtls" class="md-nav__link">
+    Sur notre machine dans les différents pods ou mTLS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sur-notre-navigateur" class="md-nav__link">
+    Sur notre navigateur :
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/1-7-ansible-trust-ca.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="17-faire-confiance-a-notre-autorite-de-certification">1.7 Faire confiance à notre autorité de certification<a class="headerlink" href="#17-faire-confiance-a-notre-autorite-de-certification" title="Permanent link">&para;</a></h1>
+<hr />
+<p>On a deux endroits où l'on va faire confiance à notre autorité de certification.</p>
+<ul>
+<li>Sur notre machine et dans les différents pods ou mTLS </li>
+<li>Sur le navigateur</li>
+</ul>
+<h4 id="sur-notre-machine-dans-les-differents-pods-ou-mtls">Sur notre machine dans les différents pods ou mTLS<a class="headerlink" href="#sur-notre-machine-dans-les-differents-pods-ou-mtls" title="Permanent link">&para;</a></h4>
+<p>Les serveurs acceptent les certificats de notre autorité de certification et se font donc suffisamment confiance entre eux pour établir une connexion TLS.</p>
+<p>Pour qu'en interne nos serveur se fassent confiance, nous avons besoin de récupérer le certificat racine de notre autorité de certification et de l'ajouter dans le trust store de nos serveurs. De plus il faut que ce certificat soit présent avant le démarrage de k3s pour valider les requêtes de dex et kubeapps.</p>
+<p>On utilise l'url du serveur staging <code>cert_manager_staging_ca_cert_url</code> qui est ici défini sur pebble pour récupérer ce certificat avant de jouer tous les rôles.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/pre-import-cert.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Download certificate file</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">uri</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">cert_manager_staging_ca_cert_url</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_internal_acme_network_ip</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">none</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="nt">return_content</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca_file</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trust cert inside current machine</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="nt">ansible.builtin.copy</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_internal_acme_ca_file</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ca_file.content</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Une fois cette configuration stocké nous allons pouvoir l'injecter dans les pods avec des <code>volumes</code>.</p>
+<p>Ces volumes sont des espaces de stockage qui seront monté dans les pods et qui seront accessible par les containers.</p>
+<p>Voici les objets volumes définis dans le fichier <strong>vars.yml</strong> de notre role kubeapps afin d'éviter qu'ils soient vide. Ils seront override si un <code>cert_manager_staging_ca_cert_url</code> est présent, car on injectera l'autorité dans les pods.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/vars/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># Mounted in acme internal</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="nt">kubeapps_internal_acme_ca_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/ssl/certs/acmeca.crt</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nt">kubeapps_internal_acme_ca_in_volume_crt: /etc/ssl/certs/acmeca.crtkubeapps_internal_acme_ca_extra_volumes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="nt">kubeapps_internal_acme_ca_extra_volumes_mounts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><strong>Note</strong> <code>/etc/ssl/certs/</code> est le répertoire par défaut des certificats sur les images linux, ils sont très souvent supportés par les frameworks et langages de programmation. Ainsi on fera confiance à n'importe quelle requête https vers un serveur configurés avec le certificat signé par celle-ci.</p>
+</blockquote>
+<p>Ensuite, il nous faut stocker dans des facts ansible le contenu du certificat et des définitions de volumes que l'on va injecter dans nos containers dans le contexte du local.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/pre-import-cert.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">set_fact</span><span class="p">:</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="nt">kubeapps_internal_acme_ca_content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ca_file.content</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">    </span><span class="nt">kubeapps_internal_acme_ca_extra_volumes</span><span class="p">:</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">      </span><span class="nt">configMap</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="nt">kubeapps_internal_acme_ca_extra_volumes_mounts</span><span class="p">:</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">        </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_internal_acme_ca_in_volume_crt</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">        </span><span class="nt">subPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
+</code></pre></div></td></tr></table></div>
+<p>Il faut ensuite absolument utiliser cette tâche avant le rôle sinon k3s va s'initialiser sans le certificat de Lets_encrypt digne de confiance et ne validera aucune connextion en TLS. (en particulier dex qui lui permet de controller le cluster avec l'api)</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/molecule/default/converge.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-41" name="__codelineno-3-41"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Import acme certificates</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="w">      </span><span class="nt">include_tasks</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;../../tasks/pre-import-cert.yml&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Nous avons alors besoin de plusieurs choses pour importer notre certificat racine dans le "trust-store" de nos serveurs.</p>
+<p>Une ressource Kubernetes <code>configmap</code> (ou <code>secret</code>) pour stocker le certificat racine que l'on a récupéré dans les étapes précédentes dans une variable <code>kubeapps_internal_acme_ca_content</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/trust-bundle-config-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-root-ca</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">cert_manager_namespace</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">  </span><span class="nt">ca.crt</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="no">{{ kubeapps_internal_acme_ca_content | indent(4) }}</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><code>indent</code> sert à rajouter les espace à chaque lignes du certificat pour qu'il soit bien formatté dans le fichier yaml.</p>
+</blockquote>
+<p><strong>Cependant,</strong> nous remarquon avec <code>kubectl get cm -A</code> que la ressource n'est présente que dans le namespace <code>cert-manager</code> or nous avons besoin de la récupérer dans les autres namespaces.</p>
+<p>C'est pourquoi nous allons utiliser un module <code>trust-manager</code> fourni par jetstack pour partager cette ressource.</p>
+<p>Pour commencer nous allons installer le helm chart de <code>trust-manager</code> avec le template <code>playbook/trust-manager.yml.j2</code> :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/trust-manager-chart-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">helm.cattle.io/v1</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmChart</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust-manager</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3.0</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust-manager</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">cert_manager_namespace</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.jetstack.io</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p>Warning : on fixe bien la version du chart car l'équipe de développement précise qu'ils apporteront des changements non rétrocompatibles dans les prochaines versions.</p>
+</blockquote>
+<p>Puis on ajoute dans après notre <code>configmap</code> le trust-bundle dans un nouveau fichier pour partagé le certificat. Notre configmap s'organise avec le nom <code>acme-internal-ca-share</code> et une sous variable précisant le fichier <code>ca.crt</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/trust-bundle-config-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nn">---</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust.cert-manager.io/v1alpha1</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bundle</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">  </span><span class="nt">sources</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">configMap</span><span class="p">:</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;acme-internal-root-ca&quot;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">      </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ca.crt&quot;</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">  </span><span class="nt">target</span><span class="p">:</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="nt">configMap</span><span class="p">:</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">      </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ca.crt&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Ensuite, <strong>il est essentiel</strong> d'appeler dans l'ordre tous ces manifests que l'on vient de créer :</p>
+<blockquote>
+<p><strong>Warning</strong> On les lance bien après l'installation et configuration de notre issuer <code>cert-manager</code> pour éviter des erreurs de dépendances manquantes.</p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust-manager-chart-crd.yml</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">      </span><span class="nt">deploy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust-manager</span><span class="w"> </span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">      </span><span class="nt">ns</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">cert_manager_namespace</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">      </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">cert_manager_is_internal</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trust-bundle-config-crd.yml</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w">      </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">cert_manager_is_internal</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Voici un exemple d'utilisation des volumes dans kubernetes :</p>
+<p>Import du volume pour le rendre disponible au montage :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">podnameexample</span><span class="p">:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">extraVolumes</span><span class="p">:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_internal_acme_ca_extra_volumes | to_nice_yaml | indent(4)</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</code></pre></div>
+<p>Montage du volume dans le container :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">podsubcontainerexample</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">extraVolumeMounts</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">kubeapps_internal_acme_ca_extra_volumes_mounts | to_nice_yaml | indent(4)</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</code></pre></div>
+<p>Les volumes sont <strong>vide par défaut</strong>, on les renseigne seulement à la fin de la tâche <strong>pre-import-cert</strong> lancée en mode cert-manager interne. Voici un rappel du <code>set_fact</code> pour définir ces volumes :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/pre-import-cert.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">    </span><span class="nt">kubeapps_internal_acme_ca_extra_volumes</span><span class="p">:</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="w">      </span><span class="nt">configMap</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">    </span><span class="nt">kubeapps_internal_acme_ca_extra_volumes_mounts</span><span class="p">:</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal-ca-share</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_internal_acme_ca_in_volume_crt</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">      </span><span class="nt">subPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ca.crt</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="sur-notre-navigateur">Sur notre navigateur :<a class="headerlink" href="#sur-notre-navigateur" title="Permanent link">&para;</a></h4>
+<p>Une autorité de certification est toujours initiée à partir d'une paire cryptographique faite d'une clé privée et d'un certificat contenant une clé publique. Comme pour d'autres protocoles comme ssh ou même Ethereum il faut accepter le certificat racine de l'autorité contenant la clé publique.</p>
+<p>Vous pouvez le récupérer avec cette commande :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-k<span class="w"> </span>https://localhost:15000/roots/0<span class="w"> </span>&gt;<span class="w"> </span>~/Downloads/pebble-ca.pem
+</code></pre></div>
+<p><strong>Mac :</strong></p>
+<ul>
+<li>Ouvrir Trousseaux d'accès (Keychain Access)</li>
+<li>Fichier &gt; Importer des élements</li>
+<li>Sélectionner <code>~/Downloads/pebble-ca.pem</code></li>
+<li>Clic droit sur "Pebble root ca" et sélectionner "Afficher les informations"</li>
+<li>Ouvrir les droits et selectionner <code>Toujours faire confiance</code> quand on utilise ce certificat</li>
+</ul>
+<p><strong>Sur Linux</strong> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo cp ~/Downloads/pebble-ca.pem /usr/local/share/ca-certificates/pebble-ca.pem
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sudo chmod 644 /usr/local/share/ca-certificates/pebble-ca.pem
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>sudo update-ca-certificates
+</code></pre></div>
+<p><strong>*Relancez la page sur votre navigateur</strong></p>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

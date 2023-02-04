@@ -1,0 +1,918 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../3-3-terraform-azure-network-vm/">
+      
+      
+        <link rel="next" href="../4-2-helm-chart-deploy/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>4.1 Création du Helm chart - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#41-creation-du-helm-chart" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.1 Création du Helm chart
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-5-ansible-dns/" class="md-nav__link">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-7-ansible-trust-ca/" class="md-nav__link">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-9-ansible-kubeapps/" class="md-nav__link">
+        1.9 Installation de kubeapps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-packer-playbook/" class="md-nav__link">
+        2. Utilisation de notre rôle dans packer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-terraform-azure-network-vm/" class="md-nav__link">
+        3.3 Machine virtuelle et réseau
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          4.1 Création du Helm chart
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        4.1 Création du Helm chart
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploiement-des-containers-des-microservices-sur-un-registre" class="md-nav__link">
+    Déploiement des containers des microservices sur un registre
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-dun-chart-pour-un-microservice" class="md-nav__link">
+    Création d'un chart pour un microservice
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mise-en-place-de-la-dependance-du-micro-service-postgres" class="md-nav__link">
+    Mise en place de la dépendance du micro service : postgres
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-et-secrets-dans-helm" class="md-nav__link">
+    Helper et secrets dans helm
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploiement-des-containers-des-microservices-sur-un-registre" class="md-nav__link">
+    Déploiement des containers des microservices sur un registre
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-dun-chart-pour-un-microservice" class="md-nav__link">
+    Création d'un chart pour un microservice
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mise-en-place-de-la-dependance-du-micro-service-postgres" class="md-nav__link">
+    Mise en place de la dépendance du micro service : postgres
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-et-secrets-dans-helm" class="md-nav__link">
+    Helper et secrets dans helm
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/4-1-helm-chart.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="41-creation-du-helm-chart">4.1 Création du Helm chart<a class="headerlink" href="#41-creation-du-helm-chart" title="Permanent link">&para;</a></h1>
+<p>Pour rappel helm est le gestionnaire de packages pour Kubernetes. Il vous aide à piloter Kubernetes à l’aide de cartes de navigation, appelés Charts en anglais. Nous allons donc en créer une pour le microservice que nous avons créé.</p>
+<p>Un "chart" est une collection de fichiers organisés dans une structure de répertoire spécifique. Ces fichiers décrivent un ensemble de ressources Kubernetes et leur configuration de manière dynamique.</p>
+<p>Une instance exécutée d'une chart avec une configuration spécifique est appelée une release.</p>
+<p>Ce chart sert à implémenter les fonctionnalités d'un ensemble de manifests kubernetes <code>deployment,service,ingress</code>. Nous n'allons pas aller trop loin et nous contenter de seulement ces fonctionnalités de déploiement. Nous aurons un chart générique que l'on va utiliser pour chaque micro services.</p>
+<blockquote>
+<p>Warning: La configuration que nous allons concevoir est très simple et ne prend pas en compte les bonnes pratiques de sécurité au niveau de des utilisateurs de postgresql.</p>
+</blockquote>
+<h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h3>
+<p>Sur Linux / mac
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div></p>
+<p>Si vous utilisez homebrew : <code>brew install helm</code> </p>
+<p>On vérifie avec <code>helm --version</code></p>
+<h3 id="deploiement-des-containers-des-microservices-sur-un-registre">Déploiement des containers des microservices sur un registre<a class="headerlink" href="#deploiement-des-containers-des-microservices-sur-un-registre" title="Permanent link">&para;</a></h3>
+<p>Nous avons besoin pour utiliser un container dans un chart helm et donc dans un pod kube, de les déployer sur un registre. </p>
+<blockquote>
+<p>Un registre de containers consiste à stocker des images de containers pour pouvoir les utiliser facilement avec une technologie de conteneurisation.</p>
+</blockquote>
+<p>Nous allons utiliser docker hub pour déployer nos containers de manière publique pour bénéficier de la gratuité du stockage des images.</p>
+<p>Tout d'abord rancher (docker) doit être lancé avant de déployer les containers et vous devez vous placer dans votre projet maven / spring boot.</p>
+<p>Ensuite, connectez-vous à votre docker hub avec <code>docker login</code> et créez un repository pour chaque microservice. Voici un exemple pour le microservice <code>client</code>.</p>
+<p><img alt="docker hub repository" src="../images/docker-hub.png" /></p>
+<p>Ensuite dans le dossier d'un microservice lancer la commande maven suivante. (on est toujours sur l'exemple du microservice <code>client</code>)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mvn<span class="w"> </span>spring-boot:build-image<span class="w"> </span>-Dspring-boot.build-image.imageName<span class="o">=</span>loicroux/client
+</code></pre></div>
+<p>Le build devrait se terminé par un message comme celui ci :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Successfully built image &#39;docker.io/loicroux/client:latest&#39;
+</code></pre></div>
+<p>Puis pousser l'image avec un tag de version pour pouvoir la pull avec kubernetes après :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>push<span class="w"> </span>loicroux/client:latest
+</code></pre></div>
+<h3 id="creation-dun-chart-pour-un-microservice">Création d'un chart pour un microservice<a class="headerlink" href="#creation-dun-chart-pour-un-microservice" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir<span class="w"> </span>charts
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>helm<span class="w"> </span>create<span class="w"> </span>charts/microservice
+</code></pre></div>
+<p>Dans le répertoire <code>charts/microservice</code> nous avons :</p>
+<ul>
+<li>un répertoire <code>templates</code> qui contient les fichiers de déploiement. </li>
+<li>un fichier <code>Chart.yaml</code> qui contient les informations sur le chart</li>
+<li>un fichier <code>values.yaml</code> qui contient les valeurs par défaut du chart</li>
+</ul>
+<p>Nous allons donc modifier notre <code>values.yaml</code> pour mettre en place plusieurs microservices et les déployer avec un seul chart.
+Tout d'abord il va falloir que nos containers soit déployer sur un registre, nous allons utiliser docker hub pour placer des containers générés construit automatiquement par le module <code>buildImage</code> de spring.</p>
+<p>Dans ce chart nous allons mettre en places des défauts pour faire fonctionner directement les microservices sur la paas sans configurations supplémentaires.</p>
+<p>On change donc seulement les valeurs par défaut du ingress pour qu'il utilise traefik et le cert-manager de notre paas.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">chart/values.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">    </span><span class="nt">kubernetes.io/ingress.class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">    </span><span class="nt">cert-manager.io/cluster-issuer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">letsencrypt-acme-issuer</span>
+</code></pre></div></td></tr></table></div>
+<p>Ensuite, on ajoute la possibilité de configurer le port du container car dans notre helm par défaut il est forcé sur 80 alors que nos microservice utilisent tous des ports différents.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">chart/values.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-53">53</a></span>
+<span class="normal"><a href="#__codelineno-6-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-53" name="__codelineno-6-53"></a><span class="nt">container</span><span class="p">:</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54"></a><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+</code></pre></div></td></tr></table></div>
+<p>Puis dans le template <code>deployment.yaml</code> on place cette configuration dynamique :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/deployment.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span>
+<span class="normal"><a href="#__codelineno-7-40">40</a></span>
+<span class="normal"><a href="#__codelineno-7-41">41</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-38" name="__codelineno-7-38"></a><span class="w">          </span><span class="nt">ports</span><span class="p">:</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a><span class="w">              </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Values.container.port</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a><span class="w">              </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+</code></pre></div></td></tr></table></div>
+<p>On va aussi enlever le endpoint de vérification de la santé d'un service car nous n'avons pas de route <code>/actuator/health</code> (module de spring boot) dans nos microservices.</p>
+<p><strong>Voici les lignes à supprimer</strong> :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/deployment.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-42">42</a></span>
+<span class="normal"><a href="#__codelineno-8-43">43</a></span>
+<span class="normal"><a href="#__codelineno-8-44">44</a></span>
+<span class="normal"><a href="#__codelineno-8-45">45</a></span>
+<span class="normal"><a href="#__codelineno-8-46">46</a></span>
+<span class="normal"><a href="#__codelineno-8-47">47</a></span>
+<span class="normal"><a href="#__codelineno-8-48">48</a></span>
+<span class="normal"><a href="#__codelineno-8-49">49</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-42" name="__codelineno-8-42"></a><span class="w">          </span><span class="nt">livenessProbe</span><span class="p">:</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43"></a><span class="w">            </span><span class="nt">httpGet</span><span class="p">:</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44"></a><span class="w">              </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span>
+<a id="__codelineno-8-45" name="__codelineno-8-45"></a><span class="w">              </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<a id="__codelineno-8-46" name="__codelineno-8-46"></a><span class="w">          </span><span class="nt">readinessProbe</span><span class="p">:</span>
+<a id="__codelineno-8-47" name="__codelineno-8-47"></a><span class="w">            </span><span class="nt">httpGet</span><span class="p">:</span>
+<a id="__codelineno-8-48" name="__codelineno-8-48"></a><span class="w">              </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/</span>
+<a id="__codelineno-8-49" name="__codelineno-8-49"></a><span class="w">              </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="mise-en-place-de-la-dependance-du-micro-service-postgres">Mise en place de la dépendance du micro service : postgres<a class="headerlink" href="#mise-en-place-de-la-dependance-du-micro-service-postgres" title="Permanent link">&para;</a></h3>
+<p>Avant de déployer notre microservice on sait que l'on a besoin d'une base de données postgres. On va donc ajouter comme <a href="https://bitnami.com/stack/postgresql/helm">dépendance</a> le chart bitnami de postgres au nôtre.</p>
+<p>On va donc modifier le fichier <code>Chart.yaml</code> pour ajouter la dépendance.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/Chart.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="nt">dependencies</span><span class="p">:</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~12.1.9</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://charts.bitnami.com/bitnami</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><code>~</code> Signifie qu'on garde les versions de patch sans passer à la majeure ou mineure suivante.</p>
+</blockquote>
+<p>Puis on met à jour les dépendances avec la commande <code>helm dependency update charts/microservice</code>.</p>
+<blockquote>
+<p>Cette commande génère un <code>Chart.lock</code> qui va permettre de bloquer les versions des dépendances.</p>
+</blockquote>
+<p>Il est temps de configurer un emplacement de stockage permanent pour votre déploiement PostgreSQL. Pour ce faire, vous allez créer un <code>PersistentVolume</code> (PV) et un <code>PersistentVolumeClaim</code> (PVC) dans Kubernetes.</p>
+<p>Un PV est une ressource Kubernetes qui est utilisée pour stocker les données de vos applications. Il existe plusieurs types de PV pris en charge par Kubernetes, tels que les répertoires locaux et les fournisseurs de stockage cloud tiers tels qu'Amazon EBS et AzureDisk.</p>
+<p>Un PVC est un moyen pour votre application d'utiliser un PV spécifique. Le PVC est utilisé pour monter le PV au pod de votre application.</p>
+<p>Pour créer un stockage persistant, vous devrez créer deux nouveaux manifests Kubernetes que l'on place tous les deux dans un template volume.yaml. Le premier manifeste est un PV qui définit le stockage persistant. Le second manifeste est un PVC qui définit la revendication de stockage persistant.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/persistence.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolume</span><span class="w"> </span><span class="c1"># Create a PV</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql-data</span><span class="w"> </span><span class="c1"># Sets PV&#39;s name</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span><span class="w"> </span><span class="c1"># Sets PV&#39;s type to local</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">manual</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">  </span><span class="nt">capacity</span><span class="p">:</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">    </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span><span class="w"> </span><span class="c1"># Sets PV Volume</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">  </span><span class="nt">hostPath</span><span class="p">:</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/data/volume&quot;</span><span class="w"> </span><span class="c1"># Sets the volume&#39;s path</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="nn">---</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span><span class="w"> </span><span class="c1"># Create PVC</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql-data-claim</span><span class="w"> </span><span class="c1"># Sets name of PV</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">manual</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span><span class="w"> </span><span class="c1"># Sets read and write access</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span><span class="w"> </span><span class="c1"># Sets volume size</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="helper-et-secrets-dans-helm">Helper et secrets dans helm<a class="headerlink" href="#helper-et-secrets-dans-helm" title="Permanent link">&para;</a></h3>
+<p>Nous avons besoin de pouvoir configurer nos microservices facilement avec des variables et des identifiants divers comme la connexion à la base de données. Pour cela nous allons créer notre propre helper et des manifests kubernetes pour utiliser des secrets.</p>
+<p>On va donc remplir un fichier de secret comme ceci :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/secrets.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span>
+<span class="normal"><a href="#__codelineno-11-8">8</a></span>
+<span class="normal"><a href="#__codelineno-11-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Values.secret.name</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">  </span><span class="p p-Indicator">{{</span><span class="nv">- range $key</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">$val</span><span class="w"> </span><span class="p p-Indicator">:</span><span class="nv">= .Values.env.secret</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">  </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">$key</span><span class="w"> </span><span class="p p-Indicator">}}:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">$val | b64enc</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">  </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="p p-Indicator">}}</span>
+</code></pre></div></td></tr></table></div>
+<p>Ensuite ce fichier de template va permettre de définir comme une fonction (helper) qui va récupérer les secrets et les injecter sous forme de variable d'environnement dans les pods.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/_helpers.tpl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>{{/*
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>Create the secrets required for our app as environment var
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>*/}}
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>{{- define &quot;helpers.listEnvVariables&quot;}}
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>{{- range $key, $val := .Values.env.secret }}
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>- name: {{ $key }}
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>  valueFrom:
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>    secretKeyRef:
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>      name: {{ $.Values.secret.name }}
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>      key: {{ $key }}
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>{{- end}}
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>{{- end }}
+</code></pre></div></td></tr></table></div>
+<p>Puis, il est utilisé dans le fichier de deployment avec la clé <code>containers</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/templates/deployment.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-36">36</a></span>
+<span class="normal"><a href="#__codelineno-13-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-36" name="__codelineno-13-36"></a><span class="w">          </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-13-37" name="__codelineno-13-37"></a><span class="w">            </span><span class="p p-Indicator">{{</span><span class="nv">- include &quot;helpers.listEnvVariables&quot; . | indent 10</span><span class="w"> </span><span class="p p-Indicator">}}</span>
+</code></pre></div></td></tr></table></div>
+<p>Enfin on ne doit pas oublier de définir les valeurs par défaut dans le fichier <code>values.yaml</code>:</p>
+<blockquote>
+<p>On prépare d'avance les variables de connection au serveur de base de données que l'on teste en local (rôle kubeapps, <code>molecule test --destroy never</code>)</p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/values.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span>
+<span class="normal"><a href="#__codelineno-14-21">21</a></span>
+<span class="normal"><a href="#__codelineno-14-22">22</a></span>
+<span class="normal"><a href="#__codelineno-14-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="nt">secret</span><span class="p">:</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all-secrets</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="w">  </span><span class="nt">secret</span><span class="p">:</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="w">    </span><span class="nt">PG_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ekommerce</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22"></a><span class="w">    </span><span class="nt">PG_CONNECTION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jdbc:postgresql://client-postgresql.default.svc.cluster.local:5432/db</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="w">    </span><span class="nt">PG_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
+</code></pre></div></td></tr></table></div>
+<p>Puis on configure le chart postgres pour qu'il utilise les secrets et le "persistence volume" définis dans le chart microservice.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">charts/microservice/values.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span>
+<span class="normal"><a href="#__codelineno-15-29">29</a></span>
+<span class="normal"><a href="#__codelineno-15-30">30</a></span>
+<span class="normal"><a href="#__codelineno-15-31">31</a></span>
+<span class="normal"><a href="#__codelineno-15-32">32</a></span>
+<span class="normal"><a href="#__codelineno-15-33">33</a></span>
+<span class="normal"><a href="#__codelineno-15-34">34</a></span>
+<span class="normal"><a href="#__codelineno-15-35">35</a></span>
+<span class="normal"><a href="#__codelineno-15-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-25" name="__codelineno-15-25"></a><span class="nt">postgresql</span><span class="p">:</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a><span class="w">  </span><span class="nt">auth</span><span class="p">:</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a><span class="w">    </span><span class="nt">enablePostgresUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29"></a><span class="w">    </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30"></a><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ekommerce</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31"></a><span class="w">  </span><span class="nt">volumePermissions</span><span class="p">:</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32"></a><span class="w">    </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33"></a><span class="w">  </span><span class="nt">primary</span><span class="p">:</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34"></a><span class="w">    </span><span class="nt">persistence</span><span class="p">:</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35"></a><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36"></a><span class="w">      </span><span class="nt">existingClaim</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;postgresql-data-claim&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Nous pouvons vérifier avec <code>helm lint charts/microservice</code> si il n'y a pas d'erreurs puis aussi voir le résultat de notre chart avec <code>helm template charts/microservice</code></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,862 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1-4-ansible-pebble/">
+      
+      
+        <link rel="next" href="../1-6-ansible-cert-manager/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>1.5 Mise en place des communications réseau du cluster - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#15-mise-en-place-des-communications-reseau-du-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.5 Mise en place des communications réseau du cluster
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          1.5 Mise en place des communications réseau du cluster
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dnsmasq-pour-resoudre-les-noms-de-domaines-en-local" class="md-nav__link">
+    Dnsmasq pour résoudre les noms de domaines en local
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edition-de-coredns-pour-utiliser-les-url-externes" class="md-nav__link">
+    Edition de coredns pour utiliser les url externes
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-7-ansible-trust-ca/" class="md-nav__link">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-9-ansible-kubeapps/" class="md-nav__link">
+        1.9 Installation de kubeapps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-packer-playbook/" class="md-nav__link">
+        2. Utilisation de notre rôle dans packer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-terraform-azure-network-vm/" class="md-nav__link">
+        3.3 Machine virtuelle et réseau
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-helm-chart/" class="md-nav__link">
+        4.1 Création du Helm chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dnsmasq-pour-resoudre-les-noms-de-domaines-en-local" class="md-nav__link">
+    Dnsmasq pour résoudre les noms de domaines en local
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edition-de-coredns-pour-utiliser-les-url-externes" class="md-nav__link">
+    Edition de coredns pour utiliser les url externes
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/1-5-ansible-dns.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="15-mise-en-place-des-communications-reseau-du-cluster">1.5 Mise en place des communications réseau du cluster<a class="headerlink" href="#15-mise-en-place-des-communications-reseau-du-cluster" title="Permanent link">&para;</a></h1>
+<hr />
+<p>Pour détailler sur cette partie essentielle à la bonne compréhension des applications distribuées sur kubernetes on parlera du <strong>dns</strong>.</p>
+<p>Dans notre stack on a besoin de deux serveurs de nom, soit un interne <strong>coredns</strong> disponible uniquement dans kubernetes et ses ressources et un serveur de nom global (qui peut être celui d'internet et le réseau local).</p>
+<h3 id="dnsmasq-pour-resoudre-les-noms-de-domaines-en-local">Dnsmasq pour résoudre les noms de domaines en local<a class="headerlink" href="#dnsmasq-pour-resoudre-les-noms-de-domaines-en-local" title="Permanent link">&para;</a></h3>
+<p>L'objectif va être de pouvoir utiliser des domaines de test en local. Par exemple on veut utiliser <code>dex.k3s.local</code> pour accéder à l'authentification de notre cluster kubernetes.</p>
+<p>L'installation sur <strong>mac</strong> est un peu différente de celle de Linux là voici pour commencer :</p>
+<ul>
+<li>
+<p><code>brew install dnsmasq</code> (si vous n'avez pas encore Homebrew c'est <a href="https://brew.sh/index_fr">ici pour l'installer</a>)</p>
+</li>
+<li>
+<p>Créer le répertoire des configurations <code>mkdir -pv $(brew --prefix)/etc/</code></p>
+</li>
+<li>
+<p>Préparer une variable pointant vers la config dnsmasq :</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DNSMASQ_CNF_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="k">)</span><span class="s2">/etc/dnsmasq.conf&quot;</span>
+</code></pre></div>
+<p>Pour <strong>Linux</strong> :</p>
+<ul>
+<li>
+<p>Commencer par désactiver le résolveur par défaut qui écoute sur le port <code>53</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>systemd-resolved
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>systemd-resolved
+</code></pre></div></p>
+</li>
+<li>
+<p>Supprimer la configuration du résolveur par défaut</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ls<span class="w"> </span>-lh<span class="w"> </span>/etc/resolv.conf
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>rm<span class="w"> </span>/etc/resolv.conf
+</code></pre></div>
+<ul>
+<li>
+<p>Installer le package : <code>sudo apt install -y dnsmasq</code></p>
+</li>
+<li>
+<p>Préparer une variable pointant vers la config dnsmasq pour l'étape suivante :</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DNSMASQ_CNF_DIR</span><span class="o">=</span><span class="s2">&quot;/etc/dnsmasq.conf&quot;</span>
+</code></pre></div>
+<p>Pour <strong>Linux</strong> et <strong>Mac</strong> mettons ainsi tout en place :</p>
+<ul>
+<li>On précise bien que l'on veut résoudre toute les requètes vers le domaine <code>.dev</code> avec l'adresse IP 127.0.0.1 : </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;port=53&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$DNSMASQ_CNF_DIR</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;address=/.k3s.local/127.0.0.1&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$DNSMASQ_CNF_DIR</span>
+</code></pre></div>
+<ul>
+<li>On ajoute un resolveur avec :</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-v<span class="w"> </span>/etc/resolver
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;nameserver 127.0.0.1&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/resolver/k3s.local
+</code></pre></div>
+<p>Redémarrer dnsmasq :</p>
+<ul>
+<li>Linux : <code>sudo systemctl restart dnsmasq</code></li>
+<li>Mac : <code>sudo brew services restart dnsmasq</code></li>
+</ul>
+<p>Vérifier que tout fonctionne avec <code>scutil --dns</code> qui devrait donner :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>resolver ...
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  domain   : k3s.local
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  nameserver[0] : 127.0.0.1
+</code></pre></div>
+<h3 id="edition-de-coredns-pour-utiliser-les-url-externes">Edition de coredns pour utiliser les url externes<a class="headerlink" href="#edition-de-coredns-pour-utiliser-les-url-externes" title="Permanent link">&para;</a></h3>
+<p>Par défaut notre réseau est privée dans kubernetes, on ne peut accéder qu'aux serveurs de nom les plus répandus comme google (8.8.8.8) ou cloudflare (1.1.1.1) et celui de <code>coredns</code>. Cela veut dire que l'on accède seulement à internet et à nos pods mais nous avons ici besoin d'accéder à pebble situé sur le réseau local.</p>
+<blockquote>
+<p><strong>Note</strong> : <strong>Coredns</strong> est l'outil qui fait office d'un des services coeurs de kubernetes au même titre que kube-controller-manager par exemple. Ici il va donc s'agir du composant kube-dns.</p>
+</blockquote>
+<p>On va donc se préparer à surcharger la configuration par défaut de coredns en appliquant un simple manifest de type <code>ConfigMap</code>. Ce type permet de simplement définir des variables ou le contenu d'un fichier. Ici on va décrire le contenu d'un fichier <code>Corefile</code> qui va être monté au travers d'un volume au container coredns.</p>
+<p>Voici la configuration par défaut :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/core-dns-config-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">coredns</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nt">data</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="nt">Corefile</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">    </span><span class="no">.:53 {</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">        </span><span class="no">errors</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">        </span><span class="no">health {</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">          </span><span class="no">lameduck 5s</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">        </span><span class="no">}</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">        </span><span class="no">ready</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">        </span><span class="no">kubernetes cluster.local in-addr.arpa ip6.arpa {</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">          </span><span class="no">pods insecure</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">          </span><span class="no">fallthrough in-addr.arpa ip6.arpa</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">          </span><span class="no">ttl 30</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">        </span><span class="no">}</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">        </span><span class="no">prometheus :9153</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">        </span><span class="no">forward . 1.1.1.1</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">        </span><span class="no">cache 30</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="w">        </span><span class="no">loop</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w">        </span><span class="no">reload</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w">        </span><span class="no">loadbalance</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w">    </span><span class="no">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Le ingress <strong>en local</strong> n'est pas accessible depuis nos pods, nous allons donc avoir besoin de son ip pour l'associer aux différents noms de domaines que l'on va utiliser. (<code>dex.k3s.local</code> / <code>kubeapps.k3s.local</code>).</p>
+<p>Nous allons ainsi créer une nouvelle suite de tâche pour déduire les adresses réseau requises pour coredns.</p>
+<p>On crée un fichier <code>tasks/internal-acme.yml</code> présentant ce code pour récupérer l'addresse ip de l'ingress à l'aide du module <code>k8s_info</code> d'ansible :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/internal-acme.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nn">---</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Get Ingress service infos</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span><span class="nt">kubernetes.core.k8s_info</span><span class="p">:</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="nt">api_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traefik</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="nt">kubeconfig</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/rancher/k3s/k3s.yaml</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">    </span><span class="nt">wait</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress_infos</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">check ingress service infos available</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">  </span><span class="nt">assert</span><span class="p">:</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">    </span><span class="nt">that</span><span class="p">:</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingress_infos.resources | length &gt; 0</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set localhost ip to find local acme</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">  </span><span class="nt">set_fact</span><span class="p">:</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">    </span><span class="nt">kubeapps_ingress_controller_ip</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ingress_infos.resources[0].spec.clusterIP</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Puis on l'utilise dans nos tâches seulement quand on précise que l'on utilise un acme interne ou spécifique (par exemple on peut utiliser un acme staging externe) :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">import_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">internal-acme.yml</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps_internal_acme_network_ip is not none</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">kubeapps</span><span class="p p-Indicator">]</span>
+</code></pre></div></td></tr></table></div>
+<p>Maintenant la variable <code>kubeapps_ingress_controller_ip</code> est disponible et prête à être associé à une entrée dns. Cette variable nous sert à détecter que nous sommes bien en local</p>
+<p>Venons en donc à la définition des noms d'hôte des applications </p>
+<blockquote>
+<p>Ils seront déployés dans les étapes suivantes donc n'essayer pas d'y accéder pour l'instant.</p>
+</blockquote>
+<p>En sachant que le principe de base d'un dns est d'associé une adresse ip à un nom de domaine, nous allons simplement associés les deux addresses <code>k3s.local</code> hériteé de notre dns local (dnsmasq) vers le ingress. Ainsi le trafic interne comme externe en direction de ces adresses arrivera bien au même endroit.</p>
+<blockquote>
+<p><strong>WARN</strong> Nous faisons cela en réseau local, mais si notre serveur est en ligne nous ne serons pas obligé de le faire car on passera par des dns centraux (typiquement google, cloudflare...) capable de résoudre notre nom de domaines public et ses sous domaines.</p>
+</blockquote>
+<p>Avant de surcharger la configuration de coredns on va juste définir les variables avec les noms de domaines que l'on va utiliser.</p>
+<blockquote>
+<p><strong>Note</strong>: Il n'est pas obligé de faire cela tout de suite en sachant que le fichier sera redonné en entier dans une prochaine partie.</p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/defaults/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nt">kubeapps_user</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ansible_user</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">d(&#39;root&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">kubeapps_internal_acme_host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acme-internal.k3s.local</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nt">dex_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dex.k3s.local</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nt">kubeapps_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubeapps.k3s.local</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><code>kubeapps_user</code> est définit à <code>ansible_user</code> une variable selon les conventions précisée dans un playbook de production dans le fichier host. Par défaut on le met à <code>root</code> si la variable n'existe pas.</p>
+</blockquote>
+<p><a href="playbook/roles/kubeapps/templates/core-dns-config-crd.yml.j2#L28">playbook/roles/kubeapps/templates/core-dns-config-crd.yml.j2</a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/core-dns-config-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-28">28</a></span>
+<span class="normal"><a href="#__codelineno-11-29">29</a></span>
+<span class="normal"><a href="#__codelineno-11-30">30</a></span>
+<span class="normal"><a href="#__codelineno-11-31">31</a></span>
+<span class="normal"><a href="#__codelineno-11-32">32</a></span>
+<span class="normal"><a href="#__codelineno-11-33">33</a></span>
+<span class="normal"><a href="#__codelineno-11-34">34</a></span>
+<span class="normal"><a href="#__codelineno-11-35">35</a></span>
+<span class="normal"><a href="#__codelineno-11-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-28" name="__codelineno-11-28"></a>    {% set ingress_hosts_internals = [dex_hostname, kubeapps_hostname] | join(&quot; &quot;) -%}
+<a id="__codelineno-11-29" name="__codelineno-11-29"></a>
+<a id="__codelineno-11-30" name="__codelineno-11-30"></a>    {{ ingress_hosts_internals }} {
+<a id="__codelineno-11-31" name="__codelineno-11-31"></a>      hosts {
+<a id="__codelineno-11-32" name="__codelineno-11-32"></a>        {{ kubeapps_ingress_controller_ip }} {{ ingress_hosts_internals }}
+<a id="__codelineno-11-33" name="__codelineno-11-33"></a>        fallthrough
+<a id="__codelineno-11-34" name="__codelineno-11-34"></a>      }
+<a id="__codelineno-11-35" name="__codelineno-11-35"></a>      whoami
+<a id="__codelineno-11-36" name="__codelineno-11-36"></a>    }
+</code></pre></div></td></tr></table></div>
+<p>Enfin on configure l'addresse de notre acme interne pour que l'étape suivante puisse bien accèder à nos urls et que l'outil cert-manager puisse accèder à ce serveur acme.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/templates/core-dns-config-crd.yml.j2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-32">32</a></span>
+<span class="normal"><a href="#__codelineno-12-33">33</a></span>
+<span class="normal"><a href="#__codelineno-12-34">34</a></span>
+<span class="normal"><a href="#__codelineno-12-35">35</a></span>
+<span class="normal"><a href="#__codelineno-12-36">36</a></span>
+<span class="normal"><a href="#__codelineno-12-37">37</a></span>
+<span class="normal"><a href="#__codelineno-12-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-32" name="__codelineno-12-32"></a>    {{ kubeapps_internal_acme_host }} {
+<a id="__codelineno-12-33" name="__codelineno-12-33"></a>      hosts {
+<a id="__codelineno-12-34" name="__codelineno-12-34"></a>        {{ kubeapps_internal_acme_network_ip }} {{ kubeapps_internal_acme_host }}
+<a id="__codelineno-12-35" name="__codelineno-12-35"></a>        fallthrough
+<a id="__codelineno-12-36" name="__codelineno-12-36"></a>      }
+<a id="__codelineno-12-37" name="__codelineno-12-37"></a>      whoami
+<a id="__codelineno-12-38" name="__codelineno-12-38"></a>    }
+</code></pre></div></td></tr></table></div>
+<p>Ainsi nous sommes prêt à faire fonctionner notre acme en local pour les tests. Cependant dans des environnement disponible sur internet nous n'allons pas activé cette partie. Nous réutilisons donc la variable <code>kubeapps_ingress_controller_ip</code> créer dynamiquement dans <code>internal-acme.yml</code> pour installer ou non le manifest kubernetes.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/roles/kubeapps/tasks/main.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-15" name="__codelineno-13-15"></a><span class="w">  </span><span class="nt">loop</span><span class="p">:</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">core-dns-config-crd.yml</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a><span class="w">      </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">kubeapps_ingress_controller_ip</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">defined</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

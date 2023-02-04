@@ -1,0 +1,1158 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../3-2-terraform-security/">
+      
+      
+        <link rel="next" href="../4-1-helm-chart/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>3.3 Machine virtuelle et réseau - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#33-machine-virtuelle-et-reseau" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3.3 Machine virtuelle et réseau
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-5-ansible-dns/" class="md-nav__link">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-7-ansible-trust-ca/" class="md-nav__link">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-9-ansible-kubeapps/" class="md-nav__link">
+        1.9 Installation de kubeapps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-packer-playbook/" class="md-nav__link">
+        2. Utilisation de notre rôle dans packer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3.3 Machine virtuelle et réseau
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        3.3 Machine virtuelle et réseau
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-lenvironnement-reseau" class="md-nav__link">
+    Création de l'environnement réseau
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-de-la-zone-dns" class="md-nav__link">
+    Configuration de la zone dns
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-lidentite-de-la-vm" class="md-nav__link">
+    Création de l'identité de la vm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-la-vm" class="md-nav__link">
+    Création de la VM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provision-final-de-la-machine-virtuelle" class="md-nav__link">
+    Provision final de la machine virtuelle
+  </a>
+  
+    <nav class="md-nav" aria-label="Provision final de la machine virtuelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-de-linfrastructure-finale" class="md-nav__link">
+    Application de l'infrastructure finale
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-helm-chart/" class="md-nav__link">
+        4.1 Création du Helm chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-lenvironnement-reseau" class="md-nav__link">
+    Création de l'environnement réseau
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-de-la-zone-dns" class="md-nav__link">
+    Configuration de la zone dns
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-lidentite-de-la-vm" class="md-nav__link">
+    Création de l'identité de la vm
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creation-de-la-vm" class="md-nav__link">
+    Création de la VM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#provision-final-de-la-machine-virtuelle" class="md-nav__link">
+    Provision final de la machine virtuelle
+  </a>
+  
+    <nav class="md-nav" aria-label="Provision final de la machine virtuelle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-de-linfrastructure-finale" class="md-nav__link">
+    Application de l'infrastructure finale
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/3-3-terraform-azure-network-vm.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="33-machine-virtuelle-et-reseau">3.3 Machine virtuelle et réseau<a class="headerlink" href="#33-machine-virtuelle-et-reseau" title="Permanent link">&para;</a></h1>
+<h4 id="creation-de-lenvironnement-reseau">Création de l'environnement réseau<a class="headerlink" href="#creation-de-lenvironnement-reseau" title="Permanent link">&para;</a></h4>
+<p>Ces directives sont essentiellement tirées de la documentation officielle de terraform pour azure. Il faut savoir que l'usage d'azure pour créer une machine nous indique l'utilisation d'un réseau virtuel (DHCP) et d'un sous-réseau afin de la rendre accessible avec une adresse IP privée.</p>
+<p><code>azurerm_virtual_network</code> et <code>azurerm_subnet</code> nous permettent de faire ça facilement dans notre groupe de ressources.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-0-100">100</a></span>
+<span class="normal"><a href="#__codelineno-0-101">101</a></span>
+<span class="normal"><a href="#__codelineno-0-102">102</a></span>
+<span class="normal"><a href="#__codelineno-0-103">103</a></span>
+<span class="normal"><a href="#__codelineno-0-104">104</a></span>
+<span class="normal"><a href="#__codelineno-0-105">105</a></span>
+<span class="normal"><a href="#__codelineno-0-106">106</a></span>
+<span class="normal"><a href="#__codelineno-0-107">107</a></span>
+<span class="normal"><a href="#__codelineno-0-108">108</a></span>
+<span class="normal"><a href="#__codelineno-0-109">109</a></span>
+<span class="normal"><a href="#__codelineno-0-110">110</a></span>
+<span class="normal"><a href="#__codelineno-0-111">111</a></span>
+<span class="normal"><a href="#__codelineno-0-112">112</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-97" name="__codelineno-0-97"></a><span class="c1">############</span>
+<a id="__codelineno-0-98" name="__codelineno-0-98"></a><span class="c1"># Vm Network</span>
+<a id="__codelineno-0-99" name="__codelineno-0-99"></a><span class="c1">############</span>
+<a id="__codelineno-0-100" name="__codelineno-0-100"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_virtual_network&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas-vn&quot;</span>
+<a id="__codelineno-0-102" name="__codelineno-0-102"></a><span class="w">  </span><span class="na">address_space</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;10.0.0.0/16&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a><span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.location</span>
+<a id="__codelineno-0-104" name="__codelineno-0-104"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-0-105" name="__codelineno-0-105"></a><span class="p">}</span>
+<a id="__codelineno-0-106" name="__codelineno-0-106"></a>
+<a id="__codelineno-0-107" name="__codelineno-0-107"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_subnet&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-108" name="__codelineno-0-108"></a><span class="w">  </span><span class="na">name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas-sub&quot;</span>
+<a id="__codelineno-0-109" name="__codelineno-0-109"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-0-110" name="__codelineno-0-110"></a><span class="w">  </span><span class="na">virtual_network_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_virtual_network.paas.name</span>
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a><span class="w">  </span><span class="na">address_prefixes</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;10.0.2.0/24&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-112" name="__codelineno-0-112"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-114">114</a></span>
+<span class="normal"><a href="#__codelineno-1-115">115</a></span>
+<span class="normal"><a href="#__codelineno-1-116">116</a></span>
+<span class="normal"><a href="#__codelineno-1-117">117</a></span>
+<span class="normal"><a href="#__codelineno-1-118">118</a></span>
+<span class="normal"><a href="#__codelineno-1-119">119</a></span>
+<span class="normal"><a href="#__codelineno-1-120">120</a></span>
+<span class="normal"><a href="#__codelineno-1-121">121</a></span>
+<span class="normal"><a href="#__codelineno-1-122">122</a></span>
+<span class="normal"><a href="#__codelineno-1-123">123</a></span>
+<span class="normal"><a href="#__codelineno-1-124">124</a></span>
+<span class="normal"><a href="#__codelineno-1-125">125</a></span>
+<span class="normal"><a href="#__codelineno-1-126">126</a></span>
+<span class="normal"><a href="#__codelineno-1-127">127</a></span>
+<span class="normal"><a href="#__codelineno-1-128">128</a></span>
+<span class="normal"><a href="#__codelineno-1-129">129</a></span>
+<span class="normal"><a href="#__codelineno-1-130">130</a></span>
+<span class="normal"><a href="#__codelineno-1-131">131</a></span>
+<span class="normal"><a href="#__codelineno-1-132">132</a></span>
+<span class="normal"><a href="#__codelineno-1-133">133</a></span>
+<span class="normal"><a href="#__codelineno-1-134">134</a></span>
+<span class="normal"><a href="#__codelineno-1-135">135</a></span>
+<span class="normal"><a href="#__codelineno-1-136">136</a></span>
+<span class="normal"><a href="#__codelineno-1-137">137</a></span>
+<span class="normal"><a href="#__codelineno-1-138">138</a></span>
+<span class="normal"><a href="#__codelineno-1-139">139</a></span>
+<span class="normal"><a href="#__codelineno-1-140">140</a></span>
+<span class="normal"><a href="#__codelineno-1-141">141</a></span>
+<span class="normal"><a href="#__codelineno-1-142">142</a></span>
+<span class="normal"><a href="#__codelineno-1-143">143</a></span>
+<span class="normal"><a href="#__codelineno-1-144">144</a></span>
+<span class="normal"><a href="#__codelineno-1-145">145</a></span>
+<span class="normal"><a href="#__codelineno-1-146">146</a></span>
+<span class="normal"><a href="#__codelineno-1-147">147</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-114" name="__codelineno-1-114"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-115" name="__codelineno-1-115"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas-security-gp&quot;</span>
+<a id="__codelineno-1-116" name="__codelineno-1-116"></a><span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.location</span>
+<a id="__codelineno-1-117" name="__codelineno-1-117"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-1-118" name="__codelineno-1-118"></a>
+<a id="__codelineno-1-119" name="__codelineno-1-119"></a><span class="w">  </span><span class="nb">security_rule</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-120" name="__codelineno-1-120"></a><span class="w">    </span><span class="na">name</span><span class="w">                       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;HTTP&quot;</span>
+<a id="__codelineno-1-121" name="__codelineno-1-121"></a><span class="w">    </span><span class="na">priority</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="m">1000</span>
+<a id="__codelineno-1-122" name="__codelineno-1-122"></a><span class="w">    </span><span class="na">direction</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Inbound&quot;</span>
+<a id="__codelineno-1-123" name="__codelineno-1-123"></a><span class="w">    </span><span class="na">access</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<a id="__codelineno-1-124" name="__codelineno-1-124"></a><span class="w">    </span><span class="na">protocol</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Tcp&quot;</span>
+<a id="__codelineno-1-125" name="__codelineno-1-125"></a><span class="w">    </span><span class="na">source_port_range</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-126" name="__codelineno-1-126"></a><span class="w">    </span><span class="na">destination_port_range</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;80&quot;</span>
+<a id="__codelineno-1-127" name="__codelineno-1-127"></a><span class="w">    </span><span class="na">source_address_prefix</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-128" name="__codelineno-1-128"></a><span class="w">    </span><span class="na">destination_address_prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-129" name="__codelineno-1-129"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-1-130" name="__codelineno-1-130"></a>
+<a id="__codelineno-1-131" name="__codelineno-1-131"></a><span class="w">  </span><span class="nb">security_rule</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-132" name="__codelineno-1-132"></a><span class="w">    </span><span class="na">name</span><span class="w">                       </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;HTTPS&quot;</span>
+<a id="__codelineno-1-133" name="__codelineno-1-133"></a><span class="w">    </span><span class="na">priority</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="m">1001</span>
+<a id="__codelineno-1-134" name="__codelineno-1-134"></a><span class="w">    </span><span class="na">direction</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Inbound&quot;</span>
+<a id="__codelineno-1-135" name="__codelineno-1-135"></a><span class="w">    </span><span class="na">access</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span>
+<a id="__codelineno-1-136" name="__codelineno-1-136"></a><span class="w">    </span><span class="na">protocol</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Tcp&quot;</span>
+<a id="__codelineno-1-137" name="__codelineno-1-137"></a><span class="w">    </span><span class="na">source_port_range</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-138" name="__codelineno-1-138"></a><span class="w">    </span><span class="na">destination_port_range</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;443&quot;</span>
+<a id="__codelineno-1-139" name="__codelineno-1-139"></a><span class="w">    </span><span class="na">source_address_prefix</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-140" name="__codelineno-1-140"></a><span class="w">    </span><span class="na">destination_address_prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-1-141" name="__codelineno-1-141"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-1-142" name="__codelineno-1-142"></a><span class="p">}</span>
+<a id="__codelineno-1-143" name="__codelineno-1-143"></a>
+<a id="__codelineno-1-144" name="__codelineno-1-144"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_subnet_network_security_group_association&quot;</span><span class="w"> </span><span class="nv">&quot;paas_security_group&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-145" name="__codelineno-1-145"></a><span class="w">  </span><span class="na">subnet_id</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_subnet.paas.id</span>
+<a id="__codelineno-1-146" name="__codelineno-1-146"></a><span class="w">  </span><span class="na">network_security_group_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_network_security_group.paas.id</span>
+<a id="__codelineno-1-147" name="__codelineno-1-147"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-149">149</a></span>
+<span class="normal"><a href="#__codelineno-2-150">150</a></span>
+<span class="normal"><a href="#__codelineno-2-151">151</a></span>
+<span class="normal"><a href="#__codelineno-2-152">152</a></span>
+<span class="normal"><a href="#__codelineno-2-153">153</a></span>
+<span class="normal"><a href="#__codelineno-2-154">154</a></span>
+<span class="normal"><a href="#__codelineno-2-155">155</a></span>
+<span class="normal"><a href="#__codelineno-2-156">156</a></span>
+<span class="normal"><a href="#__codelineno-2-157">157</a></span>
+<span class="normal"><a href="#__codelineno-2-158">158</a></span>
+<span class="normal"><a href="#__codelineno-2-159">159</a></span>
+<span class="normal"><a href="#__codelineno-2-160">160</a></span>
+<span class="normal"><a href="#__codelineno-2-161">161</a></span>
+<span class="normal"><a href="#__codelineno-2-162">162</a></span>
+<span class="normal"><a href="#__codelineno-2-163">163</a></span>
+<span class="normal"><a href="#__codelineno-2-164">164</a></span>
+<span class="normal"><a href="#__codelineno-2-165">165</a></span>
+<span class="normal"><a href="#__codelineno-2-166">166</a></span>
+<span class="normal"><a href="#__codelineno-2-167">167</a></span>
+<span class="normal"><a href="#__codelineno-2-168">168</a></span>
+<span class="normal"><a href="#__codelineno-2-169">169</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-149" name="__codelineno-2-149"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_public_ip&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-150" name="__codelineno-2-150"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas-ip&quot;</span>
+<a id="__codelineno-2-151" name="__codelineno-2-151"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-2-152" name="__codelineno-2-152"></a><span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.location</span>
+<a id="__codelineno-2-153" name="__codelineno-2-153"></a><span class="w">  </span><span class="na">allocation_method</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Dynamic&quot;</span>
+<a id="__codelineno-2-154" name="__codelineno-2-154"></a><span class="p">}</span>
+<a id="__codelineno-2-155" name="__codelineno-2-155"></a>
+<a id="__codelineno-2-156" name="__codelineno-2-156"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_network_interface&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-157" name="__codelineno-2-157"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas-nic&quot;</span>
+<a id="__codelineno-2-158" name="__codelineno-2-158"></a><span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.location</span>
+<a id="__codelineno-2-159" name="__codelineno-2-159"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-2-160" name="__codelineno-2-160"></a>
+<a id="__codelineno-2-161" name="__codelineno-2-161"></a><span class="w">  </span><span class="na">enable_accelerated_networking</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">true</span>
+<a id="__codelineno-2-162" name="__codelineno-2-162"></a>
+<a id="__codelineno-2-163" name="__codelineno-2-163"></a><span class="w">  </span><span class="nb">ip_configuration</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-164" name="__codelineno-2-164"></a><span class="w">    </span><span class="na">name</span><span class="w">                          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paasconfiguration1&quot;</span>
+<a id="__codelineno-2-165" name="__codelineno-2-165"></a><span class="w">    </span><span class="na">subnet_id</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_subnet.paas.id</span>
+<a id="__codelineno-2-166" name="__codelineno-2-166"></a><span class="w">    </span><span class="na">private_ip_address_allocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Dynamic&quot;</span>
+<a id="__codelineno-2-167" name="__codelineno-2-167"></a><span class="w">    </span><span class="na">public_ip_address_id</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_public_ip.paas.id</span>
+<a id="__codelineno-2-168" name="__codelineno-2-168"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-169" name="__codelineno-2-169"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="configuration-de-la-zone-dns">Configuration de la zone dns<a class="headerlink" href="#configuration-de-la-zone-dns" title="Permanent link">&para;</a></h4>
+<p>Azure a de très bons outils pour la gestion des zones dns. On va donc utiliser le provider <code>azurerm</code> pour créer une zone et récupérer les serveurs dns associés.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-171">171</a></span>
+<span class="normal"><a href="#__codelineno-3-172">172</a></span>
+<span class="normal"><a href="#__codelineno-3-173">173</a></span>
+<span class="normal"><a href="#__codelineno-3-174">174</a></span>
+<span class="normal"><a href="#__codelineno-3-175">175</a></span>
+<span class="normal"><a href="#__codelineno-3-176">176</a></span>
+<span class="normal"><a href="#__codelineno-3-177">177</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-171" name="__codelineno-3-171"></a><span class="c1">############</span>
+<a id="__codelineno-3-172" name="__codelineno-3-172"></a><span class="c1"># Dns</span>
+<a id="__codelineno-3-173" name="__codelineno-3-173"></a><span class="c1">############</span>
+<a id="__codelineno-3-174" name="__codelineno-3-174"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_dns_zone&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-175" name="__codelineno-3-175"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="nv">var.domain</span>
+<a id="__codelineno-3-176" name="__codelineno-3-176"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-3-177" name="__codelineno-3-177"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Voici le retour de la ressource créer qui donne tous les serveurs dns requis pour faire fonctionner la zone dns.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">[</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="s2">&quot;ns1-03.azure-dns.com.&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="s2">&quot;ns2-03.azure-dns.net.&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="s2">&quot;ns3-03.azure-dns.org.&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="s2">&quot;ns4-03.azure-dns.info.&quot;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">]</span>
+</code></pre></div>
+<p>Ensuite on arrive facilement à récupérer les serveurs dns puis les reformater (enlever les <code>.</code> à la fin) avant de les injecter dans le fournisseur de noms name.com</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-179">179</a></span>
+<span class="normal"><a href="#__codelineno-5-180">180</a></span>
+<span class="normal"><a href="#__codelineno-5-181">181</a></span>
+<span class="normal"><a href="#__codelineno-5-182">182</a></span>
+<span class="normal"><a href="#__codelineno-5-183">183</a></span>
+<span class="normal"><a href="#__codelineno-5-184">184</a></span>
+<span class="normal"><a href="#__codelineno-5-185">185</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-179" name="__codelineno-5-179"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;namedotcom_domain_nameservers&quot;</span><span class="w"> </span><span class="nv">&quot;namedotcom_paas_ns&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-180" name="__codelineno-5-180"></a><span class="w">  </span><span class="na">domain_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.domain</span>
+<a id="__codelineno-5-181" name="__codelineno-5-181"></a><span class="w">  </span><span class="na">nameservers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-182" name="__codelineno-5-182"></a><span class="c1">    # Delete ending dot which isn&#39;t valid for namedotcom api</span>
+<a id="__codelineno-5-183" name="__codelineno-5-183"></a><span class="w">    </span><span class="err">for</span><span class="w"> </span><span class="err">item</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="nv">azurerm_dns_zone.paas.name_servers</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nf">trimsuffix</span><span class="p">(</span><span class="err">item</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-184" name="__codelineno-5-184"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-5-185" name="__codelineno-5-185"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Enfin on met en place le <strong>wildcard</strong> pour la zone dns afin que tous les sous domaines pointent vers l'ip publique de la vm. Ainsi n'importe quel sous domaine de <code>paas-exemple-tutorial.live</code> pointera vers l'ingress de k3s.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-187">187</a></span>
+<span class="normal"><a href="#__codelineno-6-188">188</a></span>
+<span class="normal"><a href="#__codelineno-6-189">189</a></span>
+<span class="normal"><a href="#__codelineno-6-190">190</a></span>
+<span class="normal"><a href="#__codelineno-6-191">191</a></span>
+<span class="normal"><a href="#__codelineno-6-192">192</a></span>
+<span class="normal"><a href="#__codelineno-6-193">193</a></span>
+<span class="normal"><a href="#__codelineno-6-194">194</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-187" name="__codelineno-6-187"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_dns_a_record&quot;</span><span class="w"> </span><span class="nv">&quot;paas&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-188" name="__codelineno-6-188"></a><span class="w">  </span><span class="na">depends_on</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nv">namedotcom_domain_nameservers.namedotcom_paas_ns</span><span class="p">]</span>
+<a id="__codelineno-6-189" name="__codelineno-6-189"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<a id="__codelineno-6-190" name="__codelineno-6-190"></a><span class="w">  </span><span class="na">zone_name</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_dns_zone.paas.name</span>
+<a id="__codelineno-6-191" name="__codelineno-6-191"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-6-192" name="__codelineno-6-192"></a><span class="w">  </span><span class="na">ttl</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="nv">var.domain_ttl</span>
+<a id="__codelineno-6-193" name="__codelineno-6-193"></a><span class="w">  </span><span class="na">target_resource_id</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_public_ip.paas.id</span>
+<a id="__codelineno-6-194" name="__codelineno-6-194"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p>Warning: N'oublions pas de relié les ressources namedotcom et azure avec <code>depends_on</code>, car ce sont deux fournisseurs de services différents. On évite ainsi des problèmes de synchronisation DNS.</p>
+</blockquote>
+<p>C'est comme cela que l'on arrive à avoir un nom de domaine comme <code>kubeapps.paas-exemple-tutorial.live</code> qui pointe vers l'ingress de k3s.</p>
+<hr />
+<h4 id="creation-de-lidentite-de-la-vm">Création de l'identité de la vm<a class="headerlink" href="#creation-de-lidentite-de-la-vm" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-195">195</a></span>
+<span class="normal"><a href="#__codelineno-7-196">196</a></span>
+<span class="normal"><a href="#__codelineno-7-197">197</a></span>
+<span class="normal"><a href="#__codelineno-7-198">198</a></span>
+<span class="normal"><a href="#__codelineno-7-199">199</a></span>
+<span class="normal"><a href="#__codelineno-7-200">200</a></span>
+<span class="normal"><a href="#__codelineno-7-201">201</a></span>
+<span class="normal"><a href="#__codelineno-7-202">202</a></span>
+<span class="normal"><a href="#__codelineno-7-203">203</a></span>
+<span class="normal"><a href="#__codelineno-7-204">204</a></span>
+<span class="normal"><a href="#__codelineno-7-205">205</a></span>
+<span class="normal"><a href="#__codelineno-7-206">206</a></span>
+<span class="normal"><a href="#__codelineno-7-207">207</a></span>
+<span class="normal"><a href="#__codelineno-7-208">208</a></span>
+<span class="normal"><a href="#__codelineno-7-209">209</a></span>
+<span class="normal"><a href="#__codelineno-7-210">210</a></span>
+<span class="normal"><a href="#__codelineno-7-211">211</a></span>
+<span class="normal"><a href="#__codelineno-7-212">212</a></span>
+<span class="normal"><a href="#__codelineno-7-213">213</a></span>
+<span class="normal"><a href="#__codelineno-7-214">214</a></span>
+<span class="normal"><a href="#__codelineno-7-215">215</a></span>
+<span class="normal"><a href="#__codelineno-7-216">216</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-195" name="__codelineno-7-195"></a><span class="c1">############</span>
+<a id="__codelineno-7-196" name="__codelineno-7-196"></a><span class="c1"># Vm creation</span>
+<a id="__codelineno-7-197" name="__codelineno-7-197"></a><span class="c1">############</span>
+<a id="__codelineno-7-198" name="__codelineno-7-198"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_user_assigned_identity&quot;</span><span class="w"> </span><span class="nv">&quot;paas_vm&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-199" name="__codelineno-7-199"></a><span class="w">  </span><span class="na">location</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.location</span>
+<a id="__codelineno-7-200" name="__codelineno-7-200"></a><span class="w">  </span><span class="na">name</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;paas_vm_identity&quot;</span>
+<a id="__codelineno-7-201" name="__codelineno-7-201"></a><span class="w">  </span><span class="na">resource_group_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_resource_group.paas.name</span>
+<a id="__codelineno-7-202" name="__codelineno-7-202"></a><span class="p">}</span>
+<a id="__codelineno-7-203" name="__codelineno-7-203"></a>
+<a id="__codelineno-7-204" name="__codelineno-7-204"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;azurerm_key_vault_access_policy&quot;</span><span class="w"> </span><span class="nv">&quot;paas_vm&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-205" name="__codelineno-7-205"></a><span class="w">  </span><span class="na">key_vault_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_key_vault.paas.id</span>
+<a id="__codelineno-7-206" name="__codelineno-7-206"></a><span class="w">  </span><span class="na">tenant_id</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nv">data.azurerm_client_config.current.tenant_id</span>
+<a id="__codelineno-7-207" name="__codelineno-7-207"></a><span class="w">  </span><span class="na">object_id</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_user_assigned_identity.paas_vm.principal_id</span>
+<a id="__codelineno-7-208" name="__codelineno-7-208"></a>
+<a id="__codelineno-7-209" name="__codelineno-7-209"></a><span class="w">  </span><span class="na">key_permissions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Get&quot;</span><span class="p">,]</span>
+<a id="__codelineno-7-210" name="__codelineno-7-210"></a>
+<a id="__codelineno-7-211" name="__codelineno-7-211"></a><span class="w">  </span><span class="na">secret_permissions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-212" name="__codelineno-7-212"></a><span class="w">    </span><span class="s2">&quot;Get&quot;, &quot;List&quot;, &quot;Recover&quot;, &quot;Restore&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-213" name="__codelineno-7-213"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-7-214" name="__codelineno-7-214"></a>
+<a id="__codelineno-7-215" name="__codelineno-7-215"></a><span class="w">  </span><span class="na">storage_permissions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;Get&quot;</span><span class="w"> </span><span class="p">]</span>
+<a id="__codelineno-7-216" name="__codelineno-7-216"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>
+<p>La ressource <code>azurerm_user_assigned_identity</code> permet de créer une identité et d'ensuite accéder à ses informations de connexion (tenant, service principal...)</p>
+</li>
+<li>
+<p><code>azurerm_key_vault_access_policy</code> défini les permissions de l'identité sur le keyvault. Ici on lui donne les droits de lecture sur les secrets. <code>key_vault_id</code> est obligatoire pour lier la politique au keyvault.</p>
+</li>
+</ul>
+<h4 id="creation-de-la-vm">Création de la VM<a class="headerlink" href="#creation-de-la-vm" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-223">223</a></span>
+<span class="normal"><a href="#__codelineno-8-224">224</a></span>
+<span class="normal"><a href="#__codelineno-8-225">225</a></span>
+<span class="normal"><a href="#__codelineno-8-226">226</a></span>
+<span class="normal"><a href="#__codelineno-8-227">227</a></span>
+<span class="normal"><a href="#__codelineno-8-228">228</a></span>
+<span class="normal"><a href="#__codelineno-8-229">229</a></span>
+<span class="normal"><a href="#__codelineno-8-230">230</a></span>
+<span class="normal"><a href="#__codelineno-8-231">231</a></span>
+<span class="normal"><a href="#__codelineno-8-232">232</a></span>
+<span class="normal"><a href="#__codelineno-8-233">233</a></span>
+<span class="normal"><a href="#__codelineno-8-234">234</a></span>
+<span class="normal"><a href="#__codelineno-8-235">235</a></span>
+<span class="normal"><a href="#__codelineno-8-236">236</a></span>
+<span class="normal"><a href="#__codelineno-8-237">237</a></span>
+<span class="normal"><a href="#__codelineno-8-238">238</a></span>
+<span class="normal"><a href="#__codelineno-8-239">239</a></span>
+<span class="normal"><a href="#__codelineno-8-240">240</a></span>
+<span class="normal"><a href="#__codelineno-8-241">241</a></span>
+<span class="normal"><a href="#__codelineno-8-242">242</a></span>
+<span class="normal"><a href="#__codelineno-8-243">243</a></span>
+<span class="normal"><a href="#__codelineno-8-244">244</a></span>
+<span class="normal"><a href="#__codelineno-8-245">245</a></span>
+<span class="normal"><a href="#__codelineno-8-246">246</a></span>
+<span class="normal"><a href="#__codelineno-8-247">247</a></span>
+<span class="normal"><a href="#__codelineno-8-248">248</a></span>
+<span class="normal"><a href="#__codelineno-8-249">249</a></span>
+<span class="normal"><a href="#__codelineno-8-250">250</a></span>
+<span class="normal"><a href="#__codelineno-8-251">251</a></span>
+<span class="normal"><a href="#__codelineno-8-252">252</a></span>
+<span class="normal"><a href="#__codelineno-8-253">253</a></span>
+<span class="normal"><a href="#__codelineno-8-254">254</a></span>
+<span class="normal"><a href="#__codelineno-8-255">255</a></span>
+<span class="normal"><a href="#__codelineno-8-256">256</a></span>
+<span class="normal"><a href="#__codelineno-8-257">257</a></span>
+<span class="normal"><a href="#__codelineno-8-258">258</a></span>
+<span class="normal"><a href="#__codelineno-8-259">259</a></span>
+<span class="normal"><a href="#__codelineno-8-260">260</a></span>
+<span class="normal"><a href="#__codelineno-8-261">261</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-223" name="__codelineno-8-223"></a>resource &quot;azurerm_virtual_machine&quot; &quot;paas&quot; {
+<a id="__codelineno-8-224" name="__codelineno-8-224"></a>  name                  = &quot;paasvm&quot;
+<a id="__codelineno-8-225" name="__codelineno-8-225"></a>  location              = data.azurerm_resource_group.paas.location
+<a id="__codelineno-8-226" name="__codelineno-8-226"></a>  resource_group_name   = data.azurerm_resource_group.paas.name
+<a id="__codelineno-8-227" name="__codelineno-8-227"></a>  network_interface_ids = [azurerm_network_interface.paas.id]
+<a id="__codelineno-8-228" name="__codelineno-8-228"></a>  vm_size               = &quot;Standard_DS2_v2&quot;
+<a id="__codelineno-8-229" name="__codelineno-8-229"></a>
+<a id="__codelineno-8-230" name="__codelineno-8-230"></a>  storage_image_reference {
+<a id="__codelineno-8-231" name="__codelineno-8-231"></a>    id = data.azurerm_image.search.id
+<a id="__codelineno-8-232" name="__codelineno-8-232"></a>  }
+<a id="__codelineno-8-233" name="__codelineno-8-233"></a>
+<a id="__codelineno-8-234" name="__codelineno-8-234"></a>  delete_os_disk_on_termination = false
+<a id="__codelineno-8-235" name="__codelineno-8-235"></a>
+<a id="__codelineno-8-236" name="__codelineno-8-236"></a>  storage_os_disk {
+<a id="__codelineno-8-237" name="__codelineno-8-237"></a>    name              = &quot;paasdisk1&quot;
+<a id="__codelineno-8-238" name="__codelineno-8-238"></a>    create_option     = &quot;FromImage&quot;
+<a id="__codelineno-8-239" name="__codelineno-8-239"></a>    caching           = &quot;ReadWrite&quot;
+<a id="__codelineno-8-240" name="__codelineno-8-240"></a>    managed_disk_type = &quot;StandardSSD_LRS&quot;
+<a id="__codelineno-8-241" name="__codelineno-8-241"></a>  }
+<a id="__codelineno-8-242" name="__codelineno-8-242"></a>
+<a id="__codelineno-8-243" name="__codelineno-8-243"></a>  identity {
+<a id="__codelineno-8-244" name="__codelineno-8-244"></a>    type = &quot;UserAssigned&quot;
+<a id="__codelineno-8-245" name="__codelineno-8-245"></a>    identity_ids = [
+<a id="__codelineno-8-246" name="__codelineno-8-246"></a>      azurerm_user_assigned_identity.paas_vm.id
+<a id="__codelineno-8-247" name="__codelineno-8-247"></a>    ]
+<a id="__codelineno-8-248" name="__codelineno-8-248"></a>  }
+<a id="__codelineno-8-249" name="__codelineno-8-249"></a>
+<a id="__codelineno-8-250" name="__codelineno-8-250"></a>  os_profile {
+<a id="__codelineno-8-251" name="__codelineno-8-251"></a>    computer_name  = &quot;paasvm&quot;
+<a id="__codelineno-8-252" name="__codelineno-8-252"></a>    admin_username = &quot;kubeapps&quot;
+<a id="__codelineno-8-253" name="__codelineno-8-253"></a>    admin_password = azurerm_key_vault_secret.paas_all_secrets[&quot;vm_password&quot;].value
+<a id="__codelineno-8-254" name="__codelineno-8-254"></a>
+<a id="__codelineno-8-255" name="__codelineno-8-255"></a>    # ... For later
+<a id="__codelineno-8-256" name="__codelineno-8-256"></a>  }
+<a id="__codelineno-8-257" name="__codelineno-8-257"></a>
+<a id="__codelineno-8-258" name="__codelineno-8-258"></a>  os_profile_linux_config {
+<a id="__codelineno-8-259" name="__codelineno-8-259"></a>    disable_password_authentication = false
+<a id="__codelineno-8-260" name="__codelineno-8-260"></a>  }
+<a id="__codelineno-8-261" name="__codelineno-8-261"></a>}
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>
+<p>Tout en haut nous avons associé une interface réseau à la vm, définit le groupe, la zone et l'abonnement CPU azure <a href="https://azure.microsoft.com/fr-fr/pricing/details/virtual-machines/series/">explication des séries</a>. Ici nous avons choisi une machine classique pour des besoins de production.</p>
+</li>
+<li>
+<p><code>storage_image_reference</code> permet d'indiquer l'image à utiliser pour la vm. Ici on utilise notre image que l'on récupère avec un datasource <code>azurerm_image</code>.</p>
+</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/data.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-5" name="__codelineno-9-5"></a>data &quot;azurerm_image&quot; &quot;search&quot; {
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>  name                = &quot;kubeapps-az-arm&quot;
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>  resource_group_name = data.azurerm_resource_group.paas.name
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>}
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><code>storage_os_disk</code> défini le type de disque dur, son nom et sa source si on utilise une image existante comme c'est le cas ici.</li>
+</ul>
+<blockquote>
+<p><strong>Warning</strong> <code>delete_os_disk_on_termination = false</code> devrait être mis à true en debug pour éviter de bloquer le <code>terraform destroy</code></p>
+</blockquote>
+<ul>
+<li><code>identity</code> associe à l'identité azure créer précédemment. Cela permettra à la vm de récupérer les secrets du keyvault.</li>
+</ul>
+<h3 id="provision-final-de-la-machine-virtuelle">Provision final de la machine virtuelle<a class="headerlink" href="#provision-final-de-la-machine-virtuelle" title="Permanent link">&para;</a></h3>
+<p>Nous allons donc recourrir au <a href="https://cloudinit.readthedocs.io/en/latest/topics/modules.html#ansible">module cloud init ansible</a> déclenché automatiquement au provision azure de la vm grâce à quelques configurations.</p>
+<p>Ce fichier cloud-init.yml est un <a href="https://developer.hashicorp.com/terraform/language/functions/templatefile">template terraform</a> qui va être utilisé pour générer un fichier cloud-init.yml final. On peut y injecter des variables au travers de la propriété <code>custom_data</code> du sous module <code>os_profile</code> de <code>azurerm_linux_virtual_machine</code> et de la fonction <code>templatefile</code> de terraform.</p>
+<blockquote>
+<p><strong>Note</strong> En interne ce fichier sera converti en base64 et injecté dans la vm</p>
+</blockquote>
+<p>On ajoute donc un objet avec toutes les variables requises au bon fonctionnement du playbook.</p>
+<p>On rappelé que <code>vault_url</code> est une variable qui contient l'url du keyvault azure et que l'on va l'utiliser avec ansible et le plugin lookup <a href="https://docs.ansible.com/ansible/devel/collections/azure/azcollection/azure_keyvault_secret_lookup.html"><code>azure_keyvault_secret</code></a> pour récupérer les secrets.</p>
+<blockquote>
+<p><strong>Note</strong> L'inventaire <a href="playbook/inventories">playbook/inventories</a> a été créer dans les étapes précédentes et se trouve dans notre image créer avec <code>packer</code></p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/main.tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-259">259</a></span>
+<span class="normal"><a href="#__codelineno-10-260">260</a></span>
+<span class="normal"><a href="#__codelineno-10-261">261</a></span>
+<span class="normal"><a href="#__codelineno-10-262">262</a></span>
+<span class="normal"><a href="#__codelineno-10-263">263</a></span>
+<span class="normal"><a href="#__codelineno-10-264">264</a></span>
+<span class="normal"><a href="#__codelineno-10-265">265</a></span>
+<span class="normal"><a href="#__codelineno-10-266">266</a></span>
+<span class="normal"><a href="#__codelineno-10-267">267</a></span>
+<span class="normal"><a href="#__codelineno-10-268">268</a></span>
+<span class="normal"><a href="#__codelineno-10-269">269</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-259" name="__codelineno-10-259"></a><span class="w">    </span><span class="na">custom_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">templatefile</span><span class="p">(</span>
+<a id="__codelineno-10-260" name="__codelineno-10-260"></a><span class="w">      </span><span class="s2">&quot;${path.module}/cloud-init.yaml&quot;</span><span class="p">,</span>
+<a id="__codelineno-10-261" name="__codelineno-10-261"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-10-262" name="__codelineno-10-262"></a><span class="w">        </span><span class="na">kubeapps_hostname</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;kubeapps.${azurerm_dns_zone.paas.name}&quot;</span>
+<a id="__codelineno-10-263" name="__codelineno-10-263"></a><span class="w">        </span><span class="na">dex_hostname</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dex.${azurerm_dns_zone.paas.name}&quot;</span>
+<a id="__codelineno-10-264" name="__codelineno-10-264"></a><span class="w">        </span><span class="na">vault_url</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="nv">azurerm_key_vault.paas.vault_uri</span>
+<a id="__codelineno-10-265" name="__codelineno-10-265"></a><span class="w">        </span><span class="na">dex_github_client_org</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nv">data.github_organization.org.orgname</span>
+<a id="__codelineno-10-266" name="__codelineno-10-266"></a><span class="w">        </span><span class="na">dex_github_client_team</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">github_team.opsteam.name</span>
+<a id="__codelineno-10-267" name="__codelineno-10-267"></a><span class="w">        </span><span class="na">cert_manager_letsencrypt_env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">var.cert_manager_letsencrypt_env</span>
+<a id="__codelineno-10-268" name="__codelineno-10-268"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-10-269" name="__codelineno-10-269"></a><span class="w">    </span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>
+<p><code>datasource</code> configure le module pour qu'il récupère les informations de la vm azure (notamment les secrets du keyvault)</p>
+</li>
+<li>
+<p><code>ansible</code> permet de construire une commande ansible qui va être exécutée au démarrage de la vm. Il s'agit d'un template terraform</p>
+</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/cloud-init.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span>
+<span class="normal"><a href="#__codelineno-11-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1">#cloud-config</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nt">datasource</span><span class="p">:</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">  </span><span class="nt">Azure</span><span class="p">:</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="nt">apply_network_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/lib/waagent</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="nt">disk_aliases</span><span class="p">:</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">      </span><span class="nt">ephemeral0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/disk/cloud/azure_resource</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="nt">runcmd</span><span class="p">:</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">sleep</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">20</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="nt">ansible</span><span class="p">:</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">  </span><span class="nt">install_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">  </span><span class="nt">package_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ansible</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">  </span><span class="nt">setup_controller</span><span class="p">:</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">    </span><span class="nt">run_ansible</span><span class="p">:</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">playbook_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/playbook</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">        </span><span class="nt">inventory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/playbook/inventories/azure/hosts</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">        </span><span class="nt">playbook_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">site.yaml</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">        </span><span class="nt">extra_vars</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vault_url=${vault_url}</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="w">           </span><span class="s">dex_github_client_org=${dex_github_client_org}</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">           </span><span class="s">dex_github_client_team=${dex_github_client_team}</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">           </span><span class="s">cert_manager_letsencrypt_env=${cert_manager_letsencrypt_env}</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">           </span><span class="s">kubeapps_hostname=${kubeapps_hostname}</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="w">           </span><span class="s">dex_hostname=${dex_hostname}</span><span class="nv"> </span><span class="s">-o</span><span class="nv"> </span><span class="s">&#39;IdentitiesOnly=yes&#39;&quot;</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="w">        </span><span class="nt">connection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="application-de-linfrastructure-finale">Application de l'infrastructure finale<a class="headerlink" href="#application-de-linfrastructure-finale" title="Permanent link">&para;</a></h4>
+<p>Puis appliquer l'infrastructure sans message de confirmation :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>terraform<span class="w"> </span>apply<span class="w"> </span>-auto-approve<span class="w"> </span>-var-file<span class="w"> </span>prod.tfvars
+</code></pre></div>
+<blockquote>
+<p><code>-var-file</code> est indispensable pour charger les variables de l'environnement, sans ça vous êtes obligé de rentrer les variables à la main.</p>
+</blockquote>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

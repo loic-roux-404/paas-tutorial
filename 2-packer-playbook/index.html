@@ -1,0 +1,1002 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1-9-ansible-kubeapps/">
+      
+      
+        <link rel="next" href="../3-1-terraform-azure-init/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>2. Utilisation de notre rôle dans packer - PaaS Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../css/print-site.css">
+    
+      <link rel="stylesheet" href="../css/print-site-material.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-utilisation-de-notre-role-dans-packer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PaaS Tutorial" class="md-header__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PaaS Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Utilisation de notre rôle dans packer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PaaS Tutorial" class="md-nav__button md-logo" aria-label="PaaS Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    PaaS Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/esgi-lyon/paas-tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Tutoriel PaaS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0-install/" class="md-nav__link">
+        Introduction et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-1-ansible-install/" class="md-nav__link">
+        1.1  Provisionning du paas avec ansible
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-2-ansible-k3s/" class="md-nav__link">
+        1.2 Présentation de K3s et installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-3-ansible-manifests/" class="md-nav__link">
+        1.3 Algo d'installation des manifests
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-4-ansible-pebble/" class="md-nav__link">
+        1.4 Autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-5-ansible-dns/" class="md-nav__link">
+        1.5 Mise en place des communications réseau du cluster
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-6-ansible-cert-manager/" class="md-nav__link">
+        1.6 Utiliser notre autorité avec cert-manager
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-7-ansible-trust-ca/" class="md-nav__link">
+        1.7 Faire confiance à notre autorité de certification
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-8-ansible-dex/" class="md-nav__link">
+        1.8 Authentification et des habilitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-9-ansible-kubeapps/" class="md-nav__link">
+        1.9 Installation de kubeapps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2. Utilisation de notre rôle dans packer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        2. Utilisation de notre rôle dans packer
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#playbook-et-inventaire-final" class="md-nav__link">
+    Playbook et inventaire final
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-packer" class="md-nav__link">
+    Build packer
+  </a>
+  
+    <nav class="md-nav" aria-label="Build packer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-sources" class="md-nav__link">
+    A. Sources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#puis-creer-le-groupe-de-ressources-dans-lequel-on-va-creer-tout-nos-composants-azure" class="md-nav__link">
+    Puis créer le groupe de ressources dans lequel on va créer tout nos composants azure :
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-initialisez-un-projet-packer" class="md-nav__link">
+    B. Initialisez un projet packer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-terraform-azure-init/" class="md-nav__link">
+        3.1 Initialisation du déploiement final sur Azure avec Terraform
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-terraform-security/" class="md-nav__link">
+        3.2 Sécurisation de l'organisation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-terraform-azure-network-vm/" class="md-nav__link">
+        3.3 Machine virtuelle et réseau
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-helm-chart/" class="md-nav__link">
+        4.1 Création du Helm chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-helm-chart-deploy/" class="md-nav__link">
+        4.2 Déploiement du chart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-allez-plus-loin/" class="md-nav__link">
+        5. Allez plus loin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../print_page/" class="md-nav__link">
+        Print Site
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#playbook-et-inventaire-final" class="md-nav__link">
+    Playbook et inventaire final
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-packer" class="md-nav__link">
+    Build packer
+  </a>
+  
+    <nav class="md-nav" aria-label="Build packer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-sources" class="md-nav__link">
+    A. Sources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#puis-creer-le-groupe-de-ressources-dans-lequel-on-va-creer-tout-nos-composants-azure" class="md-nav__link">
+    Puis créer le groupe de ressources dans lequel on va créer tout nos composants azure :
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-initialisez-un-projet-packer" class="md-nav__link">
+    B. Initialisez un projet packer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/esgi-lyon/paas-tutorial/edit/main/docs/2-packer-playbook.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="2-utilisation-de-notre-role-dans-packer">2. Utilisation de notre rôle dans packer<a class="headerlink" href="#2-utilisation-de-notre-role-dans-packer" title="Permanent link">&para;</a></h1>
+<hr />
+<p>On va ici pré-provisionner une machine virtuelle dans une image azure ARM. On utilisera un playbook appelant le rôle kubeapps sans installer les pods qui ont besoin du réseau externe pour fonctionner. (cert-manager, dex et kubeapps)</p>
+<h4 id="playbook-et-inventaire-final">Playbook et inventaire final<a class="headerlink" href="#playbook-et-inventaire-final" title="Permanent link">&para;</a></h4>
+<p>Nous allons adapter le rôle en vue de cette fois ci le rendre utilisable par un playbook de préproduction.</p>
+<p>Nous allons créer le fichier <code>site.yaml</code> (dans le dossier <code>playbook/</code>) qui va se charger avec la commande <code>ansible-playbook</code> de lancer les rôles dans le bon ordre sur les machines.</p>
+<p>Cette étape servira pour utiliser le playbook dans la <a href="#2-créer-une-première-image-virtuelle-pour-le-test">partie 2</a> avec packer</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/site.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nn">---</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="nt">pre_tasks</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">include_tasks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roles/kubeapps/tasks/pre-import-cert.yml</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert_manager_is_internal</span><span class="w">  </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roles/kubeapps</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><code>include_tasks..</code> : comme pour le playbook converge dans les tests on doit importer un certificat pour faire confiance à un Lets-encrypt de test.</p>
+</blockquote>
+<p>Ensuite on crée notre inventaire pour azure dans un dossier <code>playbook/inventories/azure/</code>. Un inventaire ansible est constitué d'un groupe de variables (dossier <code>group_vars</code>) et d'un fichier <code>hosts</code> qui va contenir les machines sur lesquelles on va jouer le playbook.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>playbook/inventories/azure/group_vars
+</code></pre></div>
+<p>Ces variables de groupes font appel à un plugin <code>lookup</code> permettant de lire les secrets d'une ressource keyvault que l'on configurera dans la partie terraform.</p>
+<p>On peut ajouter l'installation de la collection dans les requirements du playbook si ce n'est pas déjà fait.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/inventories/azure/group_vars/all.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nn">---</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">cert_manager_email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="s">&#39;cert-manager-email&#39;,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="nt">dex_client_id</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="s">&#39;dex-client-id&#39;,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="nt">dex_client_secret</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">  </span><span class="s">&#39;dex-client-secret&#39;,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="nt">dex_github_client_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">  </span><span class="s">&#39;dex-github-client-id&#39;,</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="nt">dex_github_client_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">  </span><span class="s">&#39;dex-github-client-secret&#39;,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="nt">kubeapps_oauth_proxy_cookie_secret</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">lookup(</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">  </span><span class="s">&#39;azure.azcollection.azure_keyvault_secret&#39;,</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">  </span><span class="s">&#39;kubeapps-oauth-proxy-cookie-secret&#39;,</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">  </span><span class="s">vault_url=vault_url</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">  </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><strong>Note</strong> Nous n'aurons pas besoin d'utiliser les variables de connexion du plugin. Comme nous serons sur une machine azure, celle-ci aura les habilitations requises pour accéder directement aux secrets.</p>
+</blockquote>
+<p>Puis on définit un fichier <code>hosts</code> pointant directement sur localhost. </p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">playbook/inventories/azure/hosts</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="na">127.0.0.1</span>
+</code></pre></div></td></tr></table></div>
+<p>Nous allons rester sur localhost avec un provision sur la machine même dans les prochaines étapes packer et terraform.</p>
+<h2 id="build-packer">Build packer<a class="headerlink" href="#build-packer" title="Permanent link">&para;</a></h2>
+<p>Maintenant que nous savons que notre playbook est fonctionnel nous allons l'intégrer dans la chaine de création de notre image.
+Nous passerons donc par l'outil packer de hashicorp une des références dans les infrastructures cloud moderne.</p>
+<p>L'objectif est d'utiliser les installations précédentes sur une distribution linux générique pour la rendre prête à l'emploi.</p>
+<p>Voici comment le flux de création d'une VM avec packer s'organise :</p>
+<ol>
+<li>
+<p>Validation et parsing d'une <strong>configuration</strong> <a href="https://github.com/hashicorp/hcl">HCL</a></p>
+</li>
+<li>
+<p>Lancement d'un plugin <strong>builder</strong> en fonction de notre infrastructure. Par exemple on peut build des images docker, virtualbox mais aussi des images dédiées à des clouds comme Azure (celui que nous avons choisi).</p>
+</li>
+<li>
+<p>Le plugin créer, initialise les composants système majeurs de la machine puis démarre automatiquement la machine.</p>
+</li>
+<li>
+<p>Une fois la machine prête un système de <strong>communicator</strong> est disponible et nous pouvons lancer des commandes sur celle-ci. Nous utiliserons evidemment SSH.</p>
+</li>
+<li>
+<p>Des <strong>provisionners</strong> sont ensuite joués pour configurer la machine. Nous utiliserons à cette étape le plugin ansible qui va nous permettre d'utiliser le travail précédent.</p>
+</li>
+<li>
+<p>Enfin des <strong>post processors</strong> vont effectuer des traitements après le build une fois l'Iso rendu. Par exemple nous pourrons upload <strong>l'artifact</strong> sur un registre comme <a href="https://cloud.hashicorp.com/products/packer">HCP</a> ou sur un service comme <a href="https://learn.microsoft.com/fr-fr/azure/azure-resource-manager/management/overview">Azure resource manager</a></p>
+</li>
+</ol>
+<h3 id="a-sources">A. Sources<a class="headerlink" href="#a-sources" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://www.packer.io/docs">packer docs</a></li>
+<li><a href="https://www.packer.io/guides/packer-on-cicd/pipelineing-builds">packer on ci</a></li>
+<li><a href="https://www.packer.io/plugins/builders/azure#authentication-for-azure">authentication</a></li>
+<li><a href="https://www.packer.io/plugins/builders/azure/arm">Arm</a></li>
+</ul>
+<h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h3>
+<p>Pour installer packer <a href="https://www.packer.io/downloads">c'est ici</a></p>
+<blockquote>
+<p><strong>Note</strong>: recommandation : extension <code>szTheory.vscode-packer-powertools</code> (elle contient un bon formateur de fichier HCL), <code>hashicorp.hcl</code>.</p>
+</blockquote>
+<p>Vérifier que packer 1.8+ est bien installé dans votre ligne de commande :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>packer<span class="w"> </span>--version
+</code></pre></div></p>
+<p>Puis nous avons besoin de la ligne commande de azure pour créer notre service principal. Pour cela il faut installer le <a href="https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli">CLI azure</a></p>
+<p>Connectez-vous avec <strong><code>az login</code></strong> à votre compte azure.</p>
+<blockquote>
+<p><strong>Note</strong> Vous devez avoir un abonnement azure avec du crédit disponible. (exemple : essai de 200$ offert)</p>
+</blockquote>
+<h5 id="puis-creer-le-groupe-de-ressources-dans-lequel-on-va-creer-tout-nos-composants-azure">Puis créer le <code>groupe de ressources</code> dans lequel on va créer tout nos composants azure :<a class="headerlink" href="#puis-creer-le-groupe-de-ressources-dans-lequel-on-va-creer-tout-nos-composants-azure" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>az<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>kubeapps-group<span class="w"> </span>--location<span class="w"> </span>westeurope
+</code></pre></div>
+<h3 id="b-initialisez-un-projet-packer">B. Initialisez un projet packer<a class="headerlink" href="#b-initialisez-un-projet-packer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mkdir<span class="w"> </span>infra/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">cd</span><span class="w"> </span>infra
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>touch<span class="w"> </span>vars.json
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>touch<span class="w"> </span>ubuntu.pkr.hcl
+</code></pre></div>
+<p>Ajouter ce gitignore recommandé dans le dossier <code>infra/</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://github.com/github/gitignore/raw/main/Packer.gitignore<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>.gitignore
+</code></pre></div>
+<p>Les variables de configuration et leurs valeurs par défaut :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/ubuntu.pkr.hcl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>variable &quot;resource_group_name&quot; {
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>  type    = string
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>  default = &quot;kubeapps-group&quot;
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>}
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>variable &quot;image_sku&quot; {
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>  type    = string
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>  default = &quot;20_04-daily-lts-gen2&quot;
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>}
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>variable &quot;vm_size&quot; {
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>  type    = string
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a>  default = &quot;Standard_D2s_v3&quot;
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>}
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p>Note: le fichier <code>vars.json</code> sert à passer de nouvelles valeurs pour ces variables avec <code>packer build -var-file=vars.json ubuntu.pkr.hcl</code></p>
+</blockquote>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/ubuntu.pkr.hcl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-16" name="__codelineno-9-16"></a>source &quot;azure-arm&quot; &quot;vm&quot; {
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>  use_azure_cli_auth = true
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>  managed_image_name                = &quot;k3s-pre-paas-az-arm&quot;
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>  managed_image_resource_group_name = var.resource_group_name
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a>  build_resource_group_name         = var.resource_group_name
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>  os_type                           = &quot;Linux&quot;
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>  image_publisher                   = &quot;Canonical&quot;
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a>  image_offer                       = &quot;0001-com-ubuntu-server-focal-daily&quot;
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a>  image_sku                         = var.image_sku
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>  vm_size      = var.vm_size
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>  communicator = &quot;ssh&quot;
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>}
+</code></pre></div></td></tr></table></div>
+<p>Lors du processus de build packer, <strong>nous ne sommes pas accessible sur internet</strong> ce qui rend impossible l'installation de certificats letsencrypt avec cert-manager. Nous allons donc désactiver l'installation de kubeapps durant le build pour plutôt la lancer avec un script de démarrage qui relancera simplement le playbook avec le tag <code>kubeapps</code>.</p>
+<p>Ensuite, on utilise le provisionner ansible qui va installer notre playbook sur la machine azure :</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">infra/ubuntu.pkr.hcl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span>
+<span class="normal"><a href="#__codelineno-10-46">46</a></span>
+<span class="normal"><a href="#__codelineno-10-47">47</a></span>
+<span class="normal"><a href="#__codelineno-10-48">48</a></span>
+<span class="normal"><a href="#__codelineno-10-49">49</a></span>
+<span class="normal"><a href="#__codelineno-10-50">50</a></span>
+<span class="normal"><a href="#__codelineno-10-51">51</a></span>
+<span class="normal"><a href="#__codelineno-10-52">52</a></span>
+<span class="normal"><a href="#__codelineno-10-53">53</a></span>
+<span class="normal"><a href="#__codelineno-10-54">54</a></span>
+<span class="normal"><a href="#__codelineno-10-55">55</a></span>
+<span class="normal"><a href="#__codelineno-10-56">56</a></span>
+<span class="normal"><a href="#__codelineno-10-57">57</a></span>
+<span class="normal"><a href="#__codelineno-10-58">58</a></span>
+<span class="normal"><a href="#__codelineno-10-59">59</a></span>
+<span class="normal"><a href="#__codelineno-10-60">60</a></span>
+<span class="normal"><a href="#__codelineno-10-61">61</a></span>
+<span class="normal"><a href="#__codelineno-10-62">62</a></span>
+<span class="normal"><a href="#__codelineno-10-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-31" name="__codelineno-10-31"></a>build {
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a>  sources = [&quot;sources.azure-arm.vm&quot;]
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a>  provisioner &quot;shell&quot; {
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a>    inline = [
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a>      &quot;curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py&quot;,
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a>      &quot;sudo python3 /tmp/get-pip.py&quot;,
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a>      &quot;sudo pip3 install --ignore-installed ansible==6.5.0 pyyaml openshift kubernetes&quot;,
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a>      &quot;sudo mkdir /playbook &amp;&amp; sudo chown -R packer:packer /playbook&quot;,
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a>    ]
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a>  }
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a>  provisioner &quot;ansible-local&quot; {
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a>    command       = &quot;sudo ansible-playbook&quot;
+<a id="__codelineno-10-46" name="__codelineno-10-46"></a>    playbook_file = &quot;../playbook/site.yaml&quot;
+<a id="__codelineno-10-47" name="__codelineno-10-47"></a>    playbook_dir  = &quot;../playbook/&quot;
+<a id="__codelineno-10-48" name="__codelineno-10-48"></a>    extra_arguments = [&quot;--skip-tags kubeapps&quot;]
+<a id="__codelineno-10-49" name="__codelineno-10-49"></a>    galaxy_file             = &quot;../playbook/requirements.yaml&quot;
+<a id="__codelineno-10-50" name="__codelineno-10-50"></a>    galaxy_command          = &quot;sudo ansible-galaxy&quot;
+<a id="__codelineno-10-51" name="__codelineno-10-51"></a>    galaxy_roles_path       = &quot;/usr/share/ansible/roles&quot;
+<a id="__codelineno-10-52" name="__codelineno-10-52"></a>    galaxy_collections_path = &quot;/usr/share/ansible/collections&quot;
+<a id="__codelineno-10-53" name="__codelineno-10-53"></a>    staging_directory       = &quot;/playbook/&quot;
+<a id="__codelineno-10-54" name="__codelineno-10-54"></a>  }
+<a id="__codelineno-10-55" name="__codelineno-10-55"></a>
+<a id="__codelineno-10-56" name="__codelineno-10-56"></a>  provisioner &quot;shell&quot; {
+<a id="__codelineno-10-57" name="__codelineno-10-57"></a>    execute_command = &quot;chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh &#39;{{ .Path }}&#39;&quot;
+<a id="__codelineno-10-58" name="__codelineno-10-58"></a>    inline = [
+<a id="__codelineno-10-59" name="__codelineno-10-59"></a>      &quot;/usr/sbin/waagent -force -deprovision+user &amp;&amp; export HISTSIZE=0 &amp;&amp; sync&quot;
+<a id="__codelineno-10-60" name="__codelineno-10-60"></a>    ]
+<a id="__codelineno-10-61" name="__codelineno-10-61"></a>    inline_shebang = &quot;/bin/sh -x&quot;
+<a id="__codelineno-10-62" name="__codelineno-10-62"></a>  }
+<a id="__codelineno-10-63" name="__codelineno-10-63"></a>}
+</code></pre></div></td></tr></table></div>
+<blockquote>
+<p><strong>Note</strong>: le provisionner shell est nécessaire pour nettoyer l'agent azure qui est installé par défaut sur les images automatiquement générées par ce cloud.</p>
+</blockquote>
+<p>Toujours dans <code>infra/</code>, on lance le traitement entier avec packer :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>packer<span class="w"> </span>build<span class="w"> </span>ubuntu.pkr.hcl
+</code></pre></div>
+<p>Vous pourrez voir le résultat de la création de l'image dans le portail azure dans votre groupe de ressource <code>kubeapps-group</code>.</p>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../js/print-site.js"></script>
+      
+    
+  </body>
+</html>
